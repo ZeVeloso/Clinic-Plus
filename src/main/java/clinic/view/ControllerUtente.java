@@ -1,24 +1,28 @@
 package clinic.view;
 
-import clinic.HelloApplication;
+import clinic.Helpers.UtenteConsultaClinica;
 import clinic.MainFX;
-import clinic.business.ClinicFacade;
-import clinic.business.Consulta;
-import clinic.business.Utente;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import clinic.business.*;
+import clinic.view.Add.AddConsultaController;
+import clinic.view.Box.AlertBox;
+import clinic.view.Box.ConfirmBox;
+import clinic.view.Helpers.DateHelper;
+import clinic.view.Helpers.GoToHelper;
+import clinic.view.Helpers.MenuBarHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -46,6 +50,12 @@ public class ControllerUtente {
     private TextArea histPessField;
     @FXML
     private TextArea histFamField;
+
+    @FXML
+    private TextField docNameField;
+
+    @FXML
+    private ChoiceBox clinicaBox;
     @FXML
     private TableView tableConsulta;
     @FXML
@@ -70,14 +80,42 @@ public class ControllerUtente {
     @FXML
     private Button addConsultaButton;
 
+    @FXML
+    private TableView tableDocs;
+
+    @FXML
+    private TableColumn docCol;
+
+    @FXML
+    private BorderPane borderPane;
+
     public ClinicFacade model;
 
     private ObservableList<Consulta> dataNotes;
-
+    private ObservableList<Documento> documentos;
     DateHelper dateHelper;
 
     private boolean changed;
 
+    private int idCena;
+
+    public void addDocHandler(){
+        FileChooser fileChooser = new FileChooser();
+        String nome = docNameField.getText();
+        docNameField.setText("");
+        if(!nome.equals("")) {
+            FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG (*.png)", "*.png");
+            fileChooser.getExtensionFilters().addAll(extFilterPNG);
+
+            File file = fileChooser.showOpenDialog(null);
+            if (file != null) {
+                Documento d = new Documento(null, nome, Integer.parseInt(idField.getText()));
+                this.model.putDoc(d, file.getAbsolutePath());
+                this.refreshDataDocs();
+            }
+        } else AlertBox.display("Erro", "Adicione um nome para o ficheiro no campo em baixo");
+
+    }
 
     public void efetivarConsultaHandler(){
         ObservableList<Consulta> consultasSelected;
@@ -109,6 +147,14 @@ public class ControllerUtente {
         tableConsulta.setItems(dataNotes);
     }
 
+    public void refreshDataDocs(){
+        if(documentos!=null)
+            documentos.clear();
+        Collection<Documento> colecDocs = this.model.getDocumentos(Integer.parseInt(idField.getText()));
+        documentos.addAll(colecDocs);
+        tableDocs.setItems(documentos);
+    }
+
     public void addConsulta() throws IOException {
         Parent root;
         FXMLLoader loader = new FXMLLoader(MainFX.class.getResource("addConsulta.fxml"));
@@ -130,7 +176,10 @@ public class ControllerUtente {
         }
         if(answer==true) {
             Parent root;
-            FXMLLoader loader = new FXMLLoader(MainFX.class.getResource("utentes.fxml"));
+            FXMLLoader loader;
+            if(idCena==1)
+                loader = new FXMLLoader(MainFX.class.getResource("utentes.fxml"));
+            else loader = new FXMLLoader(MainFX.class.getResource("clinicas.fxml"));
             root = loader.load();
             Stage stage1 = (Stage) voltarButton.getScene().getWindow();
             stage1.setTitle("Utentes");
@@ -143,14 +192,10 @@ public class ControllerUtente {
     public void apagarUtenteHandler() throws IOException {
         this.model.removeUtente(Integer.parseInt(idField.getText()));
         AlertBox.display("Confirmação", "Utente removido com SUCESSO! :)");
-        Stage stage = (Stage) apagarUtenteButton.getScene().getWindow();
-        Scene scene = apagarUtenteButton.getScene();
-        FXMLLoader loader = new FXMLLoader(MainFX.class.getResource("utentes.fxml"));
-        Parent root = loader.load();
-        stage.setTitle("Utentes");
-        stage.setScene(new Scene(root, scene.getWidth(), scene.getHeight()));
+        GoToHelper.goToSameStage(apagarUtenteButton, "utentes.fxml");
 
     }
+
 
     public void updateUtente(){
         Integer id = Integer.parseInt(idField.getText());
@@ -162,8 +207,9 @@ public class ControllerUtente {
         String histFam = histFamField.getText();
         String histPess = histPessField.getText();
         String morada = moradaField.getText();
+        Clinica clinica = (Clinica) clinicaBox.getValue();
         int years = this.dateHelper.AgeCalculator(nascimento);
-        Utente novo = new Utente(id, nascimento, telemovel, years, profissao, histFam, histPess, nome, fis, morada, 1);
+        Utente novo = new Utente(id, nascimento, telemovel, years, profissao, histFam, histPess, nome, fis, morada,clinica.getId() );
         this.model.updateUtente(novo);
         idadeField.setText(String.valueOf(years));
         AlertBox.display("Confirmação", "Dados alterados com sucesso! :)");
@@ -171,10 +217,12 @@ public class ControllerUtente {
     }
 
 
-    public void displayID(Utente u){
+    public void displayID(int a, int idCena){
         changed=false;
+        this.idCena=idCena;
         this.dateHelper = new DateHelper();
         this.model = new ClinicFacade();
+        Utente u = this.model.getUtente(a);
         idField.setText(String.valueOf(u.getId()));
         nomeField.setText(u.getNome());
         telField.setText(String.valueOf(u.getTelemovel()));
@@ -185,8 +233,16 @@ public class ControllerUtente {
         histPessField.setText(u.getHistorico_pessoal());
         fisField.setText(u.getAtividade_fisica());
         moradaField.setText(u.getMorada());
-
+        Clinica clinica = this.model.getClinicaDeUtente(u.getClinicaID());
+        clinicaBox.setValue(clinica);
+        Collection<Clinica> coll = this.model.getClinicas();
+        ObservableList list = FXCollections.observableArrayList();
+        list.addAll(coll);
+        clinicaBox.setItems(list);
         dataNotes = FXCollections.observableArrayList();
+
+        documentos = FXCollections.observableArrayList();
+
         tableConsulta.getSelectionModel().setSelectionMode(
                 SelectionMode.MULTIPLE
         );
@@ -206,12 +262,18 @@ public class ControllerUtente {
                 new PropertyValueFactory<Consulta, String>("motivo")
         );
 
+
+        docCol.setCellValueFactory(
+                new PropertyValueFactory<Documento, String>("nome"));
+
         dateHelper.convertDatePicker(nascField);
 
-        Collection<Consulta> colec =  this.model.getConsultasUtente(u.getId());
-        System.out.println(colec.toString());
-        dataNotes.addAll(colec);
+        Collection<Documento> colecDocs = this.model.getDocumentos(u.getId());
+        documentos.addAll(colecDocs);
+        tableDocs.setItems(documentos);
 
+        Collection<Consulta> colec =  this.model.getConsultasUtente(u.getId());
+        dataNotes.addAll(colec);
         tableConsulta.setItems(dataNotes);
 
         tableConsulta.setRowFactory(tv -> {
@@ -221,8 +283,6 @@ public class ControllerUtente {
                         && event.getClickCount() == 2) {
 
                     Consulta clickedRow = row.getItem();
-                    Stage stage1 = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                    Scene scena = ((Node)event.getSource()).getScene();
                     Parent root;
                     Stage newStage = new Stage();
                     try {
@@ -243,6 +303,23 @@ public class ControllerUtente {
             return row;
         });
 
+        tableDocs.setRowFactory(tv -> {
+            TableRow<Documento> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+
+                    Documento clickedRow = row.getItem();
+                    Parent root;
+                    Stage newStage = new Stage();
+                    this.model.getDoc(clickedRow.getId());
+                    ImageViewDoc.display();
+
+                }
+            });
+            return row;
+        });
+
         textFieldDetectNewInput(nomeField);
         textFieldDetectNewInput(profField);
         textFieldDetectNewInput(telField);
@@ -252,6 +329,9 @@ public class ControllerUtente {
         textAreaDetectNewInput(histPessField);
         textAreaDetectNewInput(fisField);
         datePickerDetectedNewInput(nascField);
+
+        MenuBarHelper.setupMenuBar(borderPane);
+
     }
     private void textAreaDetectNewInput(TextArea textArea) {
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {

@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: clinic.Lancher
+Main-Class: clinic.Launcher
 Class-Path: javafx-controls-16-mac.jar javafx-controls-16.jar javafx-bas
  e-16.jar javafx-graphics-16.jar javafx-fxml-16.jar javafx-base-16-mac.j
  ar javafx-fxml-16-mac.jar javafx-graphics-16-mac.jar

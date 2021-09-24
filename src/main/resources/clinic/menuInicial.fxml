@@ -1,69 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="486.0" prefWidth="684.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.MenuInicialController">
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="tituloLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="917.0" text="CLINIC +" textAlignment="CENTER" underline="true" VBox.vgrow="ALWAYS">
-               <font>
-                  <Font name="Droid Serif" size="65.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="CROSSHAIR" />
-               </cursor>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Label>
-            <Region prefHeight="6.0" prefWidth="751.0" />
-            <HBox fx:id="hboxImages" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <ImageView fx:id="utentesImageView" fitHeight="250.0" fitWidth="250.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="adicionarClinicaButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#adicionarClinica" prefHeight="25.0" prefWidth="180.0" text="Adicionar Clinica" textAlignment="CENTER">
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </VBox.margin>
-                        </Button>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <ImageView fx:id="consultasImageView" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="pesquisarUtentesButton" alignment="CENTER" mnemonicParsing="false" onAction="#pesquisarUtentes" prefHeight="25.0" prefWidth="158.0" text="Pesquisar" textAlignment="CENTER">
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </VBox.margin>
-                        </Button>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <ImageView fx:id="clinicImageView" fitHeight="250.0" fitWidth="250.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
-                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="159.0" text="Pesquisar - Nao da" textAlignment="CENTER" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </VBox.margin>
-                        </Button>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </center>
+<BorderPane fx:id="borderPane" prefHeight="486.0" prefWidth="684.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.MenuInicialController">
    <top>
-      <HBox prefHeight="28.0" prefWidth="751.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="22.0" prefWidth="750.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="logoImageView" fitHeight="25.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="logoImageView" fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" />
             <MenuBar style="-fx-background-color: #03fff8;">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
@@ -88,7 +34,41 @@
                   </Menu>
               </menus>
             </MenuBar>
+            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Button disable="true" mnemonicParsing="false" onAction="#configHandler" text="Config">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
    </top>
+   <right>
+      <VBox prefHeight="461.0" prefWidth="194.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="adicionarClinicaButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#adicionarClinica" prefHeight="25.0" prefWidth="374.0" text="Adicionar Clinica" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="pesquisarClinicasButton" mnemonicParsing="false" onAction="#pesquisarClinicasHandler" prefHeight="25.0" prefWidth="348.0" text="Pesquisar Clinicas">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Separator prefWidth="200.0" />
+            <Button fx:id="pesquisarUtentesButton" alignment="CENTER" mnemonicParsing="false" onAction="#pesquisarUtentes" prefHeight="25.0" prefWidth="388.0" text="Pesquisar" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Separator prefWidth="200.0" />
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="400.0" text="Pesquisar - Nao da" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </right>
 </BorderPane>

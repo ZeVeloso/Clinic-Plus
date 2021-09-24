@@ -4,7 +4,8 @@ import clinic.business.ClinicFacade;
 import clinic.business.Clinica;
 import clinic.business.Consulta;
 import clinic.business.Utente;
-import clinic.data.TesteDao;
+import clinic.data.DAOconfig;
+import clinic.data.QueryDAO;
 
 import java.util.Scanner;
 
@@ -214,7 +215,7 @@ public class TextUI {
     private void trataListarConsultasUtente(){
         //System.out.println("id do utente ");
         //String id = scin.nextLine();
-        TesteDao t = new TesteDao();
+        QueryDAO t = new QueryDAO();
         try {
             System.out.println(t.getConsulta(1).toString());
         }

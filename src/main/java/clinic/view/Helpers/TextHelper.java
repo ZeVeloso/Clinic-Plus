@@ -1,4 +1,4 @@
-package clinic.view;
+package clinic.view.Helpers;
 
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;

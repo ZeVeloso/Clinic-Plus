@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="borderPane" prefHeight="497.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.ClinicasController">
+   <top>
+      <HBox prefHeight="7.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="logoImageView" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </MenuBar>
+         </children>
+      </HBox>
+   </top>
+   <right>
+      <VBox prefHeight="462.0" prefWidth="147.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="15.0" prefWidth="231.0" text="Utentes">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Constantia" size="13.0" />
+               </font>
+            </Label>
+            <VBox fx:id="vBoxFilter" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <TextField fx:id="nomeField" promptText="Nome">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="telemovelField" promptText="Telemovel">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="moradaField" promptText="Morada">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+               </children>
+            </VBox>
+            <Button mnemonicParsing="false" onAction="#filterUtenteHandler" prefHeight="25.0" prefWidth="215.0" text="Pesquisar">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Separator>
+            <Button fx:id="addUtenteHandler" mnemonicParsing="false" onAction="#addUtenteHandler" prefHeight="25.0" prefWidth="153.0" text="Adicionar Utente">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#removerUtenteHandler" prefHeight="25.0" prefWidth="183.0" text="Remover Utente">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="206.0" text="Ir Utente - n funciona">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Region prefHeight="235.0" prefWidth="93.0" VBox.vgrow="ALWAYS" />
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Separator>
+            <Label alignment="CENTER" layoutX="15.0" layoutY="15.0" prefHeight="15.0" prefWidth="174.0" text="Clinica">
+               <font>
+                  <Font name="Constantia" size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="nomeClinicaField" promptText="Nome">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#filterClinicaHandler" prefHeight="25.0" prefWidth="280.0" text="Pesquisar">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Separator>
+            <Button fx:id="adicionarClinicaButton" mnemonicParsing="false" onAction="#adicionarClinicaHandler" prefHeight="25.0" prefWidth="154.0" text="Adicionar Clinica">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#removerClinicaHandler" prefHeight="25.0" prefWidth="160.0" text="Remover Clinica">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+   <left>
+      <TableView fx:id="tableClinica" prefHeight="462.0" prefWidth="147.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="idClinicaCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="nomeClinicaCol" prefWidth="75.0" text="Nome" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </TableView>
+   </left>
+   <center>
+      <TableView fx:id="tableUtente" prefHeight="375.0" prefWidth="468.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="idUtenteCol" prefWidth="26.0" text="ID" />
+          <TableColumn fx:id="nomeUtenteCol" prefWidth="71.0" text="Nome" />
+            <TableColumn fx:id="idadeUtenteCol" prefWidth="58.0" text="Idade" />
+            <TableColumn fx:id="telUtenteCol" prefWidth="73.0" text="Telemovel" />
+            <TableColumn fx:id="nascUtenteCol" prefWidth="124.0" text="Data de Nascimento" />
+            <TableColumn fx:id="moradaUtenteCol" prefWidth="139.0" text="Morada" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+</BorderPane>

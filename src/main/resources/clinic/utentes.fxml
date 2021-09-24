@@ -34,12 +34,14 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="500.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.Controller">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="500.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.Controller">
    <top>
       <HBox BorderPane.alignment="CENTER">
          <children>
+            <ImageView fx:id="logoImageView" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
             <MenuBar>
               <menus>
                 <Menu mnemonicParsing="false" text="File">
@@ -74,7 +76,7 @@
             <TableColumn fx:id="clinicaCol" prefWidth="75.0" text="Clinica" />
         </columns>
          <BorderPane.margin>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </BorderPane.margin>
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -85,36 +87,35 @@
       </TableView>
    </center>
    <right>
-      <VBox prefHeight="375.0" prefWidth="169.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="BoxButtons" prefHeight="375.0" prefWidth="169.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="nameField" promptText="Nome">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
+            <VBox fx:id="vBoxButtons" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <TextField fx:id="nameField" promptText="Nome">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="telField" promptText="Telemovel">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="moradaField" promptText="Morada">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+               </children>
+            </VBox>
+            <Button mnemonicParsing="false" onAction="#filterUtentesHandler" prefHeight="25.0" prefWidth="285.0" text="Pesquisar" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
-            </TextField>
-            <TextField fx:id="telField" promptText="Telemovel">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-            <DatePicker fx:id="nascField" promptText="Data de Nascimento">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </DatePicker>
-            <TextField fx:id="moradaField" promptText="Morada">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </TextField>
-            <ChoiceBox fx:id="choiceBoxClinica" prefHeight="25.0" prefWidth="205.0">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </ChoiceBox>
+            </Button>
             <Label fx:id="telErrorLabel">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -125,18 +126,22 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
+            <Separator prefWidth="200.0" />
             <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#addUtente" text="Adiciona">
+            <Button mnemonicParsing="false" onAction="#addUtente" prefHeight="25.0" prefWidth="251.0" text="Adiciona">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#removeUtente" text="Remove">
+            <Button mnemonicParsing="false" onAction="#removeUtente" prefHeight="25.0" prefWidth="398.0" text="Remove">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
       </VBox>
    </right>
 </BorderPane>

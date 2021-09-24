@@ -21,9 +21,9 @@ public class Consulta {
     }
 
     public Consulta(Integer id, String data){
-        this.id=null;
+        this.id=id;
         this.data=data;
-        this.custo=1;
+        this.custo=0;
         this.obs="";
         this.estado="";
         this.utenteID=id;

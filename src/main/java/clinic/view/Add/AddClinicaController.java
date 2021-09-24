@@ -1,4 +1,4 @@
-package clinic.view;
+package clinic.view.Add;
 
 import clinic.MainFX;
 import clinic.business.ClinicFacade;
@@ -30,7 +30,8 @@ public class AddClinicaController implements Initializable {
 
     @FXML
     public void cancelarHandler(){
-
+        Stage window = (Stage) cancelarButton.getScene().getWindow();
+        window.close();
     }
     @FXML
     public void adicionarHandler(){
@@ -45,6 +46,7 @@ public class AddClinicaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        
         this.model = new ClinicFacade();
 
     }

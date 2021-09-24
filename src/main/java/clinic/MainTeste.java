@@ -1,10 +1,17 @@
 package clinic;
 
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.*;
 import java.sql.*;
 
 public class MainTeste {
     public static void main(String[] args) {
-        String url = "jdbc:sqlite:clinicDB1.db";
+        String url = "jdbc:sqlite:ClinicDB.db";
 
         try (
                 Connection conn = DriverManager.getConnection(url)) {
@@ -53,14 +60,15 @@ public class MainTeste {
                         "idade=" + "12" + ", profissao = '" + "prof" + "', historico_familiar='"+"fam"+
                         "', historico_pessoal='"+"pess" + "', nome='"+ "nomeAlteradoUpdate" + "', atividade_fisica='"+"fisica"+
                         "' WHERE id=" + "3";
+
                 Statement stat = conn.createStatement();
                 Statement stat1 = conn.createStatement();
                 Statement stat2 = conn.createStatement();
                 Statement stat3 = conn.createStatement();
                 Statement stat4 = conn.createStatement();
                 Statement stat5 = conn.createStatement();
-                stat1.executeUpdate("DROP TABLE utentes");
-                stat2.executeUpdate("DROP TABLE consultas");
+                //stat1.executeUpdate("DROP TABLE utentes");
+                //stat2.executeUpdate("DROP TABLE consultas");
                 //stat.executeUpdate(sqlUtente);
                 //stat1.executeUpdate(sqlConsulta);
                   //stat2.executeUpdate(sql2);
@@ -68,28 +76,58 @@ public class MainTeste {
                 //stat.executeUpdate(insertConsulta);
                 //stat3.executeUpdate(alterTable1);
                 //stat1.executeUpdate("DELETE FROM utentes WHERE id=2");
+                PreparedStatement pstmt = conn.prepareStatement("INSERT OR REPLACE INTO documentos (id,doc, fk_utente_id) " +
+                        "VALUES (8,?,2)");
+                byte[] f = readFile("C:\\Users\\Asus\\Desktop\\clinica.png");
+                System.out.println(f);
+                pstmt.setBytes(1, f);
+                pstmt.execute();
+                File file = new File("coco3.png");
+                FileOutputStream fos =  new FileOutputStream(file);
                 ResultSet res = stat4.executeQuery("select * from utentes");
-                ResultSet res1 = stat5.executeQuery("select * from consultas");
+                ResultSet res1 = stat5.executeQuery("select * from documentos WHERE id=8");
+                Image image1 = null;
                 while (res1.next()) {
-                    int id1 = res1.getInt("id");
-                    String utenteid = res1.getString("estado");
-                    System.out.println("Consulta " + id1 + " " + utenteid);
+                    InputStream input = res1.getBinaryStream("doc");
+                    byte[] buffer = new byte[1024];
+                    while (input.read(buffer) > 0) {
+                        fos.write(buffer);
+                    }
                 }
-                while (res.next()) {
-                    String nome = res.getString("nascimento");
-                    int id = res.getInt("id");
-                    String nome1 = res.getString("nome");
-                    System.out.println("Utente "+ id + " " + nome1);
-                }
-
+               /* Stage stage = new Stage();
+                ImageView image = new ImageView(image1);
+                VBox vbox=new VBox();
+                vbox.getChildren().add(image);
+                Scene scene = new Scene(vbox);
+                stage.setScene(scene);
+                stage.show();*/
 
 
             }
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException | FileNotFoundException e) {
+            e.getMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        System.exit(0);
 
+    }
+
+    private static byte[] readFile(String file) {
+        ByteArrayOutputStream bos = null;
+        try {
+            File f = new File(file);
+            FileInputStream fis = new FileInputStream(f);
+            byte[] buffer = new byte[1024];
+            bos = new ByteArrayOutputStream();
+            for (int len; (len = fis.read(buffer)) != -1;) {
+                bos.write(buffer, 0, len);
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        } catch (IOException e2) {
+            System.err.println(e2.getMessage());
+        }
+        return bos != null ? bos.toByteArray() : null;
     }
 }

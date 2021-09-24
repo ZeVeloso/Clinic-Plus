@@ -1,21 +1,16 @@
 package clinic.view;
 
-import clinic.MainFX;
 import clinic.business.ClinicFacade;
 import clinic.business.Consulta;
-import clinic.business.Utente;
-import javafx.collections.FXCollections;
+import clinic.view.Box.AlertBox;
+import clinic.view.Helpers.DateHelper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 public class ConsultaDetalhadaController {

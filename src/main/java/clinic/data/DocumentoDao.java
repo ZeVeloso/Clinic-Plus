@@ -1,6 +1,7 @@
 package clinic.data;
 
-import clinic.business.Utente;
+import clinic.business.Clinica;
+import clinic.business.Documento;
 
 import java.sql.*;
 import java.util.Collection;
@@ -8,32 +9,24 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+public class DocumentoDao implements Map<Integer, Documento>{
 
-public class UtenteDAO implements Map<Integer, Utente> {
+    public static DocumentoDao singleton;
 
-    public static UtenteDAO singleton;
-
-    private UtenteDAO() {
+    private DocumentoDao() {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate("PRAGMA foreign_keys = ON");
-            String sql = "CREATE TABLE IF NOT EXISTS utentes (" +
-                    "  id INTEGER PRIMARY KEY ," +
-                    "  nascimento VARCHAR(45) NULL," +
-                    "  telemovel INT NULL," +
-                    "  idade INT NULL," +
-                    "  profissao VARCHAR(45) NULL," +
-                    "  morada VARCHAR(64) NULL," +
-                    "  historico_familiar TEXT NULL," +
-                    "  historico_pessoal TEXT NULL," +
-                    "  nome VARCHAR(64) NULL," +
-                    "  atividade_fisica VARCHAR NULL," +
-                    "  fk_clinica_id INT NULL," +
-                    "  FOREIGN KEY (fk_clinica_id)" +
-                    "  REFERENCES clinicas (id)" +
-                    "  ON DELETE CASCADE" +
-                    "  ON UPDATE NO ACTION);"
-                    ;
+            String sql = "CREATE TABLE IF NOT EXISTS documentos (" +
+                    "  id INTEGER PRIMARY KEY," +
+                    "  doc BLOB NULL," +
+                    "  nome VARCHAR(64) NULL,"+
+                    " fk_utente_id INT NULL," +
+                    " FOREIGN KEY (fk_utente_id)" +
+                    " REFERENCES utentes (id)" +
+                    " ON DELETE CASCADE " +
+                    " ON UPDATE NO ACTION);";
+            ;
             stm.executeUpdate(sql);
         } catch (SQLException e) {
             // Erro a criar tabela...
@@ -42,11 +35,12 @@ public class UtenteDAO implements Map<Integer, Utente> {
         }
     }
 
-    public static UtenteDAO getInstance() {
-        if ( UtenteDAO.singleton == null) {
-            UtenteDAO.singleton = new UtenteDAO();
+    public static DocumentoDao getInstance() {
+
+        if ( DocumentoDao.singleton == null) {
+            DocumentoDao.singleton = new  DocumentoDao();
         }
-        return  UtenteDAO.singleton;
+        return   DocumentoDao.singleton;
     }
     /**
      * @return número de turmas na base de dados
@@ -56,7 +50,7 @@ public class UtenteDAO implements Map<Integer, Utente> {
         int i = 0;
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT count(*) FROM utentes")) {
+             ResultSet rs = stm.executeQuery("SELECT count(*) FROM clinicas")) {
             if(rs.next()) {
                 i = rs.getInt(1);
             }
@@ -67,10 +61,6 @@ public class UtenteDAO implements Map<Integer, Utente> {
             throw new NullPointerException(e.getMessage());
         }
         return i;
-    }
-
-    public int diarreia(){
-        return 0;
     }
 
     /**
@@ -96,7 +86,7 @@ public class UtenteDAO implements Map<Integer, Utente> {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement();
              ResultSet rs =
-                     stm.executeQuery("SELECT Id FROM utentes WHERE id="+key.toString())) {
+                     stm.executeQuery("SELECT Id FROM clinicas WHERE id="+key.toString())) {
             r = rs.next();
         } catch (SQLException e) {
             // Database error!
@@ -117,7 +107,7 @@ public class UtenteDAO implements Map<Integer, Utente> {
      */
     @Override
     public boolean containsValue(Object value) {
-        Utente t = (Utente) value;
+        Documento t = (Documento) value;
         return this.containsKey(t.getId());
     }
 
@@ -129,18 +119,14 @@ public class UtenteDAO implements Map<Integer, Utente> {
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public Utente get(Object key) {
-        Utente a = null;
+    public Documento get(Object key) {
+        Documento a = null;
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT * FROM utentes WHERE id="+key)) {
+             ResultSet rs = stm.executeQuery("SELECT * FROM documentos WHERE id="+key)) {
             if (rs.next()) {  // A chave existe na tabela
                 // Reconstruir o aluno com os dados obtidos da BD - a chave estranjeira da turma, não é utilizada aqui.
-                a = new Utente(rs.getInt("id"), rs.getString("nascimento"), rs.getInt("telemovel"),
-                        rs.getInt("idade"), rs.getString("profissao"),rs.getString("historico_familiar"),
-                        rs.getString("historico_pessoal"),rs.getString("nome"),
-                        rs.getString("atividade_fisica"), rs.getString("morada"),
-                        rs.getInt("fk_clinica_id"));
+                a = new Documento(rs.getInt("id"), rs.getBlob("doc"), rs.getInt("fk_utente_id"));
             }
 
         } catch (SQLException e) {
@@ -166,19 +152,15 @@ public class UtenteDAO implements Map<Integer, Utente> {
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public Utente put(Integer key, Utente a) {
-        Utente res = null;
+    public Documento put(Integer key, Documento a) {
+        Documento res = null;
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate("PRAGMA foreign_keys = ON");
 
             stm.executeUpdate(
-                    "INSERT OR REPLACE INTO utentes (id,nascimento, telemovel, idade, profissao, historico_familiar," +
-                            "historico_pessoal,nome,atividade_fisica, morada, fk_clinica_id) " +
-                            "VALUES ("+a.getId()+",'"+a.getNascimento()+"', "+a.getTelemovel()+
-                            ", "+a.getIdade()+", '"+a.getProfissao()+"', '"+a.getHistorico_familiar() +
-                            "', '"+a.getHistorico_pessoal()+"', '"+a.getNome()+"','"+a.getAtividade_fisica() +
-                            "', '" + a.getMorada() + "'," + a.getClinicaID() + ");");
+                    "INSERT OR REPLACE INTO documentos (id,nome) " +
+                            "VALUES ("+a.getId()+",'"+a.getFile().getBinaryStream()+"')");
         } catch (SQLException e) {
             // Database error!
             e.printStackTrace();
@@ -197,12 +179,12 @@ public class UtenteDAO implements Map<Integer, Utente> {
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public Utente remove(Object key) {
-        Utente t = this.get(key);
+    public Documento remove(Object key) {
+        Documento t = this.get(key);
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate("PRAGMA foreign_keys = ON");
-            stm.executeUpdate("DELETE FROM utentes WHERE id='"+key+"'");
+            stm.executeUpdate("DELETE FROM clinicas WHERE id='"+key+"'");
         } catch (Exception e) {
             // Database error!
             e.printStackTrace();
@@ -214,12 +196,12 @@ public class UtenteDAO implements Map<Integer, Utente> {
     /**
      * Adicionar um conjunto de turmas à base de dados
      *
-     * @param utentes as turmas a adicionar
+     * @param clinicas as turmas a adicionar
      * @throws NullPointerException Em caso de erro - deveriam ser criadas exepções do projecto
      */
     @Override
-    public void putAll(Map<? extends Integer, ? extends Utente> utentes) {
-        for(Utente t : utentes.values()) {
+    public void putAll(Map<? extends Integer, ? extends Documento> clinicas) {
+        for(Documento t : clinicas.values()) {
             this.put(t.getId(), t);
         }
     }
@@ -234,7 +216,7 @@ public class UtenteDAO implements Map<Integer, Utente> {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement()) {
 
-            stm.executeUpdate("TRUNCATE utentes");
+            stm.executeUpdate("TRUNCATE clinicas");
         } catch (SQLException e) {
             // Database error!
             e.printStackTrace();
@@ -257,14 +239,14 @@ public class UtenteDAO implements Map<Integer, Utente> {
      * @return Todos as turmas da base de dados
      */
     @Override
-    public Collection<Utente> values() {
-        Collection<Utente> res = new HashSet<>();
+    public Collection<Documento> values() {
+        Collection<Documento> res = new HashSet<>();
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT id FROM utentes")) { // ResultSet com os ids de todas as turmas
+             ResultSet rs = stm.executeQuery("SELECT id FROM clinicas")) { // ResultSet com os ids de todas as turmas
             while (rs.next()) {
                 String idt = rs.getString("id"); // Obtemos um id de turma do ResultSet
-                Utente t = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
+                Documento t = this.get(idt);                    // Utilizamos o get para construir as turmas uma a uma
                 res.add(t);                                 // Adiciona a turma ao resultado.
             }
         } catch (Exception e) {
@@ -280,8 +262,10 @@ public class UtenteDAO implements Map<Integer, Utente> {
      * @return ainda nada!
      */
     @Override
-    public Set<Entry<Integer, Utente>> entrySet() {
-        throw new NullPointerException("public Set<Map.Entry<String,Utente>> entrySet() not implemented!");
+    public Set<Map.Entry<Integer, Documento>> entrySet() {
+        throw new NullPointerException("public Set<Map.Entry<String,Clinica>> entrySet() not implemented!");
     }
+
+
 
 }

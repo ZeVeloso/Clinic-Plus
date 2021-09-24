@@ -1,6 +1,5 @@
-package clinic.view;
+package clinic.view.Box;
 
-import clinic.Lancher;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
