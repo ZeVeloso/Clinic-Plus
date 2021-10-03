@@ -1,6 +1,5 @@
 package clinic.view;
 
-import clinic.Helpers.UtenteConsultaClinica;
 import clinic.MainFX;
 import clinic.business.ClinicFacade;
 import clinic.business.Clinica;
@@ -28,7 +27,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.Collection;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ClinicasController implements Initializable {
@@ -77,6 +75,9 @@ public class ClinicasController implements Initializable {
     private Button adicionarClinicaButton;
 
     @FXML
+    private Button irButton;
+
+    @FXML
     private BorderPane borderPane;
 
     @FXML
@@ -88,6 +89,19 @@ public class ClinicasController implements Initializable {
     private int idClinica;
     private FXCalendar calendar;
     private DateHelper dateHelper;
+
+    @FXML
+    private void clearUtenteFieldHandler(){
+        nomeField.clear();
+        telemovelField.clear();
+        moradaField.clear();
+        calendar.clear();
+    }
+
+    @FXML
+    private void clearFieldsClinicaHandler(){
+        nomeClinicaField.clear();
+    }
 
     private void refreshData(){
 
@@ -103,9 +117,20 @@ public class ClinicasController implements Initializable {
 
 
     @FXML
+    private void irUtenteHandler() throws IOException, ParseException {
+        Utente utentesSelected;
+        utentesSelected = tableUtente.getSelectionModel().getSelectedItem();
+        GoToHelper.gotoSameStageController(irButton,"perfilUtente.fxml", utentesSelected.getId(),2);
+    }
+
+    @FXML
     private void filterUtenteHandler() throws ParseException {
-        Collection<Utente> fitlered = UtenteClinicaHelper.filterUtenteHandler(model,nomeField, telemovelField, moradaField, calendar);
-        UtenteClinicaHelper.refreshDataFilter(fitlered, tableUtente, dataUtentes);
+        if(idClinica==0)
+            AlertBox.display("Error", "Clinica nao selecionada");
+        else {
+            Collection<Utente> fitlered = UtenteClinicaHelper.filterUtenteHandler(model, nomeField, telemovelField, moradaField, calendar, String.valueOf(idClinica));
+            UtenteClinicaHelper.refreshDataFilter(fitlered, tableUtente, dataUtentes);
+        }
     }
 
     @FXML
@@ -159,11 +184,14 @@ public class ClinicasController implements Initializable {
         this.model= new ClinicFacade();
         this.dateHelper = new DateHelper();
         this.calendar = new FXCalendar();
+        idClinica=0;
         dataClinicas = FXCollections.observableArrayList();
         dataUtentes = FXCollections.observableArrayList();
-
-        //UtenteClinicaHelper.setupInit(logoImageView, tableUtente, idUtenteCol, nomeUtenteCol, idadeUtenteCol, telUtenteCol, nascUtenteCol, moradaUtenteCol,2);
+        tableUtente.getSelectionModel().setSelectionMode(
+                SelectionMode.MULTIPLE
+        );
         MenuBarHelper.setupMenuBar(borderPane);
+        calendar = new FXCalendar();
         UtenteClinicaHelper.setupFilterBox(vBoxFilter, calendar);
 
         tableClinica.getSelectionModel().setSelectionMode(
@@ -195,26 +223,11 @@ public class ClinicasController implements Initializable {
                         && event.getClickCount() == 2) {
 
                     Utente clickedRow = row.getItem();
-                    Stage stage1 = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                    Scene scena = ((Node)event.getSource()).getScene();
-                    Parent root;
                     try {
-                        FXMLLoader loader = new FXMLLoader(MainFX.class.getResource("perfilUtente.fxml"));
-                        root = loader.load();
-                        ControllerUtente c=loader.getController();
-                        stage1.setTitle("Clinic +");
-                        c.displayID(clickedRow.getId(), 2);
-                        stage1.setScene(new Scene(root, scena.getWidth(), scena.getHeight()));
-                    } catch (IOException e) {
+                        GoToHelper.gotoSameStageController((Node)event.getSource(),"perfilUtente.fxml", clickedRow.getId(),2);
+                    } catch (IOException | ParseException e) {
                         e.printStackTrace();
                     }
-
-                }
-                if (! row.isEmpty() && event.getButton()== MouseButton.SECONDARY
-                        && event.getClickCount() == 2) {
-
-                    Utente clickedRow = row.getItem();
-
 
                 }
             });

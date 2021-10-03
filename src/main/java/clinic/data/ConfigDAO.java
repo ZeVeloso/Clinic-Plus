@@ -1,7 +1,5 @@
 package clinic.data;
 
-import clinic.business.Consulta;
-
 import java.sql.*;
 
 public class ConfigDAO {

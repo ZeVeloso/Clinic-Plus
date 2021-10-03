@@ -2,13 +2,7 @@ package clinic.view.Helpers;
 
 import clinic.MainFX;
 import clinic.view.Box.AlertBox;
-import clinic.view.FirstPreloader;
-import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -16,8 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -35,14 +27,13 @@ public class MenuBarHelper {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-
         });
 
 
         MenuBar menuBar = new MenuBar();
 
         Menu utentesMenu = new Menu("Utentes");
-        Menu clinicasMenu = new Menu("Clinincas");
+        Menu clinicasMenu = new Menu("Clinicas");
         Menu consultasMenu = new Menu("Consultas");
         Menu helpMenu = new Menu("Ajuda");
 
@@ -51,6 +42,8 @@ public class MenuBarHelper {
         MenuItem addClinica = new MenuItem("Adicionar");
         MenuItem pesqClinicas = new MenuItem("Pesquisar");
         MenuItem pesqConsultas = new MenuItem("Pesquisar");
+        MenuItem addConsultas = new MenuItem("Adicionar");
+        MenuItem ajuda = new MenuItem("Ajuda");
 
         pesqUtentes.setOnAction(e-> {
             try {
@@ -81,14 +74,27 @@ public class MenuBarHelper {
             }
         });
 
-        pesqConsultas.setOnAction(e->{
-            AlertBox.display("", "FAZER WINDOW DE PESQ CONSULTAS");
+        pesqConsultas.setOnAction(e-> {
+            try {
+                GoToHelper.goToSameStage((MenuItem) e.getSource(), "consultas.fxml");
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        addConsultas.setOnAction(e-> {
+            try {
+                GoToHelper.goToNewStage("addConsultaOut.fxml", 400, 183);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
 
+        ajuda.setOnAction(e-> AlertBox.display("Ajuda","Email: veloso.j04@gmail.com"));
 
         utentesMenu.getItems().addAll(pesqUtentes, addUtentes);
         clinicasMenu.getItems().addAll(pesqClinicas, addClinica);
-        consultasMenu.getItems().add(pesqConsultas);
+        consultasMenu.getItems().addAll(pesqConsultas, addConsultas);
+        helpMenu.getItems().add(ajuda);
 
         menuBar.getMenus().addAll(utentesMenu, clinicasMenu, consultasMenu, helpMenu);
 

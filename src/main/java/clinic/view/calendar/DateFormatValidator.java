@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class DateFormatValidator{
  
-  private Pattern pattern;
+  private final Pattern pattern;
   private Matcher matcher;
  
   private static final String DATE_PATTERN = 
@@ -46,17 +46,9 @@ public class DateFormatValidator{
 	     } else if (month.equals("2") || month.equals("02")) {
                   //leap year
 		  if(year % 4==0){
-			  if(day.equals("30") || day.equals("31")){
-				  return false;
-			  }else{
-				  return true;
-			  }
+              return !day.equals("30") && !day.equals("31");
 		  }else{
-		         if(day.equals("29")||day.equals("30")||day.equals("31")){
-				  return false;
-		         }else{
-				  return true;
-			  }
+              return !day.equals("29") && !day.equals("30") && !day.equals("31");
 		  }
 	      }else{				 
 		return true;				 

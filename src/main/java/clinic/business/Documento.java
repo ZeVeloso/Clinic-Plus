@@ -6,6 +6,7 @@ public class Documento {
 
     private Integer id;
     private Blob file;
+    private String type;
     private String nome;
     private Integer idUtente;
 
@@ -33,6 +34,20 @@ public class Documento {
         this.idUtente = idUtente;
     }
 
+    public Documento(Integer id, String type, String nome, Integer idUtente) {
+        this.id = id;
+        this.type = type;
+        this.nome = nome;
+        this.idUtente = idUtente;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Integer getIdUtente() {
         return idUtente;

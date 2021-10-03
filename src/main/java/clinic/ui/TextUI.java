@@ -4,7 +4,6 @@ import clinic.business.ClinicFacade;
 import clinic.business.Clinica;
 import clinic.business.Consulta;
 import clinic.business.Utente;
-import clinic.data.DAOconfig;
 import clinic.data.QueryDAO;
 
 import java.util.Scanner;
@@ -213,8 +212,6 @@ public class TextUI {
     }
 
     private void trataListarConsultasUtente(){
-        //System.out.println("id do utente ");
-        //String id = scin.nextLine();
         QueryDAO t = new QueryDAO();
         try {
             System.out.println(t.getConsulta(1).toString());
@@ -259,138 +256,4 @@ public class TextUI {
         }
     }
 
-/*
-    private void trataConsultarAluno() {
-        try {
-            System.out.println("Número a consultar: ");
-            String num = scin.nextLine();
-            if (this.model.existeAluno(num)) {
-                System.out.println(this.model.procuraAluno(num).toString());
-            } else {
-                System.out.println("Esse número de aluno não existe!");
-            }
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void trataListarAlunos() {
-        //Scanner scin = new Scanner(System.in);
-        try {
-            System.out.println(this.model.getAlunos().toString());
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void trataAdicionarTurma() {
-        //Scanner scin = new Scanner(System.in);
-        try {
-            System.out.println("Número da turma: ");
-            String tid = scin.nextLine();
-            if (!this.model.existeTurma(tid)) {
-                System.out.println("Sala: ");
-                String sala = scin.nextLine();
-                System.out.println("Edifício: ");
-                String edif = scin.nextLine();
-                System.out.println("Capacidade: ");
-                int cap = scin.nextInt();
-                scin.nextLine();    // Limpar o buffer depois de ler o inteiro
-                this.model.adicionaTurma(new Turma(tid, new Sala(sala, edif, cap)));
-                System.out.println("Turma adicionada");
-            } else {
-                System.out.println("Esse número de turma já existe!");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void trataMudarSalaTurma() {
-        try {
-            System.out.println("Número da turma: ");
-            String tid = scin.nextLine();
-            if (this.model.existeTurma(tid)) {
-                System.out.println("Sala: ");
-                String sala = scin.nextLine();
-                System.out.println("Edifício: ");
-                String edif = scin.nextLine();
-                System.out.println("Capacidade: ");
-                int cap = scin.nextInt();
-                scin.nextLine();    // Limpar o buffer depois de ler o inteiro
-                this.model.alteraSalaDeTurma(tid, new Sala(sala, edif, cap));
-                System.out.println("Sala da turma alterada");
-            } else {
-                System.out.println("Esse número de turma não existe!");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void trataListarTurmas() {
-        try {
-            System.out.println(this.model.getTurmas().toString());
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void trataAdicionarAlunoATurma() {
-        try {
-            System.out.println("Número da turma: ");
-            String tid = scin.nextLine();
-            if (this.model.existeTurma(tid)) {
-                System.out.println("Número do aluno: ");
-                String num = scin.nextLine();
-                if (this.model.existeAluno(num)) {
-                    this.model.adicionaAlunoTurma(tid, num);
-                    System.out.println("Aluno adicionado à turma");
-                } else {
-                    System.out.println("Esse número de aluno não existe!");
-                }
-            } else {
-                System.out.println("Esse número de turma não existe!");
-            }
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void trataRemoverAlunoDaTurma() {
-        try {
-            System.out.println("Número da turma: ");
-            String tid = scin.nextLine();
-            if (this.model.existeTurma(tid)) {
-                System.out.println("Número do aluno: ");
-                String num = scin.nextLine();
-                if (this.model.existeAlunoEmTurma(tid,num)) {
-                    this.model.removeAlunoTurma(tid, num);
-                    System.out.println("Aluno removido da turma");
-                } else {
-                    System.out.println("Esse número de aluno não existe na turma!");
-                }
-            } else {
-                System.out.println("Esse número de turma não existe!");
-            }
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void trataListarAlunosTurma() {
-        try {
-            System.out.println("Número da turma: ");
-            String tid = scin.nextLine();
-            System.out.println(this.model.getAlunos(tid).toString());
-        }
-        catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
 }

@@ -50,9 +50,9 @@ public class FXCalendarCell {
 	 */
 	class DateCell  extends AbstractCell{
 
-		private SimpleIntegerProperty cellDate = new SimpleIntegerProperty();
-		private SimpleIntegerProperty cellMonth = new SimpleIntegerProperty();
-		private SimpleIntegerProperty cellYear = new SimpleIntegerProperty();
+		private final SimpleIntegerProperty cellDate = new SimpleIntegerProperty();
+		private final SimpleIntegerProperty cellMonth = new SimpleIntegerProperty();
+		private final SimpleIntegerProperty cellYear = new SimpleIntegerProperty();
 		private boolean previousState = false;
 		private boolean weekNumCell = false;
 		

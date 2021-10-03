@@ -27,13 +27,13 @@ import javafx.stage.Popup;
 
 public class FXCalendar extends HBox {
 
-	private SimpleIntegerProperty selectedDate = new SimpleIntegerProperty();
-	private SimpleIntegerProperty selectedMonth = new SimpleIntegerProperty();
-	private SimpleIntegerProperty selectedYear = new SimpleIntegerProperty();
-	private SimpleBooleanProperty triggered = new SimpleBooleanProperty();
+	private final SimpleIntegerProperty selectedDate = new SimpleIntegerProperty();
+	private final SimpleIntegerProperty selectedMonth = new SimpleIntegerProperty();
+	private final SimpleIntegerProperty selectedYear = new SimpleIntegerProperty();
+	private final SimpleBooleanProperty triggered = new SimpleBooleanProperty();
 	private final SimpleObjectProperty<Color> baseColor = new SimpleObjectProperty<Color>();
-	private SimpleDoubleProperty dateTextWidth = new SimpleDoubleProperty(74);
-	private SimpleObjectProperty<Date> value = new SimpleObjectProperty<Date>();
+	private final SimpleDoubleProperty dateTextWidth = new SimpleDoubleProperty(74);
+	private final SimpleObjectProperty<Date> value = new SimpleObjectProperty<Date>();
 	private boolean showWeekNumber;
 	private FXCalendarUtility fxCalendarUtility;
 	private DateTextField dateTxtField;
@@ -403,7 +403,7 @@ public class FXCalendar extends HBox {
 	}
 
 
-	public static interface Cell {
+	public interface Cell {
 		Node getNode();
 
 		void updateItem(String item);
@@ -423,7 +423,7 @@ public class FXCalendar extends HBox {
 		}
 
 		public void updateItem(String item) {
-			setText(item != null ? item.toString() : "");
+			setText(item != null ? item : "");
 		}
 	}
 

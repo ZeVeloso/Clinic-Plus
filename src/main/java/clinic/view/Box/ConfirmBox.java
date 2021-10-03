@@ -1,5 +1,6 @@
 package clinic.view.Box;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,10 +19,10 @@ public class ConfirmBox {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setMinWidth(300);
-        window.setMinHeight(150);
+        window.setMinHeight(110);
         Label label = new Label();
         label.setText(message);
-
+        VBox.setMargin(label, new Insets(5,5,5,5));
         Button yesButton = new Button("Sim");
         Button noButton = new Button("Nao");
 

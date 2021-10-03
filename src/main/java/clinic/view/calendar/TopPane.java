@@ -15,14 +15,14 @@ import javafx.scene.layout.TilePane;
 
 
 public class TopPane extends Group {
-	private DatePicker datePicker;
+	private final DatePicker datePicker;
 	private StackPane monthPane;
 	private StackPane yearPane;
 	private StackPane footerPane;
-	private SimpleIntegerProperty month = new SimpleIntegerProperty();
-	private SimpleIntegerProperty year = new SimpleIntegerProperty();
-	private FXCalendarControls.CalendarToggleButton[] monthButtons = new FXCalendarControls.CalendarToggleButton[12];
-	private FXCalendarControls.CalendarToggleButton[] yearButtons = new FXCalendarControls.CalendarToggleButton[10];
+	private final SimpleIntegerProperty month = new SimpleIntegerProperty();
+	private final SimpleIntegerProperty year = new SimpleIntegerProperty();
+	private final FXCalendarControls.CalendarToggleButton[] monthButtons = new FXCalendarControls.CalendarToggleButton[12];
+	private final FXCalendarControls.CalendarToggleButton[] yearButtons = new FXCalendarControls.CalendarToggleButton[10];
 	private FXCalendarControls.YearNavigatorArrowButton prevBtn;
 	
 	public TopPane(DatePicker datePicker) {
@@ -151,11 +151,7 @@ public class TopPane extends Group {
 
 	public void styleTopMonthPane() {
 		for (int i = 0; i < 12; i++) {
-			if (getMonth() == (Integer) monthButtons[i].getUserData()) {
-				monthButtons[i].setDisable(true);
-			} else {
-				monthButtons[i].setDisable(false);
-			}
+			monthButtons[i].setDisable(getMonth() == (Integer) monthButtons[i].getUserData());
 		}
 	}
 
@@ -267,22 +263,14 @@ public class TopPane extends Group {
 
 	public void styleTopYearPane() {
 		for (int i = 0; i < 10; i++) {
-			if (getYear() == (Integer) yearButtons[i].getUserData()) {
-				yearButtons[i].setDisable(true);
-			} else {
-				yearButtons[i].setDisable(false);
-			}
+			yearButtons[i].setDisable(getYear() == (Integer) yearButtons[i].getUserData());
 		}
 	}
 
 	private int[] getYearArray(int year) {
 		int[] arr = new int[10];
 		int startYear = year>5 ? year - 4 : 1; // Not showing negative years
-		if(year==1){
-			prevBtn.setDisable(true);
-		}else{
-			prevBtn.setDisable(false);
-		}
+		prevBtn.setDisable(year == 1);
 		
 		for (int i = 0; i < 10; i++) {
 			arr[i] = startYear;

@@ -2,46 +2,21 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="500.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.ConsultasController">
-    <top>
-        <HBox BorderPane.alignment="CENTER">
-            <children>
-                <ImageView fx:id="logoImageView" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                <MenuBar>
-                    <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </children>
-        </HBox>
-    </top>
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="500.0" prefHeight="453.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.ConsultasController">
     <center>
-        <TableView fx:id="tableUtentes" prefHeight="371.0" prefWidth="433.0" BorderPane.alignment="CENTER">
+        <TableView fx:id="tableConsultas" prefHeight="371.0" prefWidth="433.0" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="nameCol" prefWidth="200.0" text="Nome" />
-                <TableColumn fx:id="moradaCol" prefWidth="100.0" text="Telemovel" />
-                <TableColumn fx:id="idadeCol" prefWidth="65.0" text="Data" />
-                <TableColumn fx:id="telCol" prefWidth="132.0" text="Motivo" />
-                <TableColumn fx:id="nascCol" prefWidth="110.0" text="Custo" />
-                <TableColumn fx:id="clinicaCol" prefWidth="75.0" text="Nome da Clinica" />
+                <TableColumn fx:id="nomeCol" prefWidth="200.0" text="Nome" />
+                <TableColumn fx:id="telemovelCol" prefWidth="76.0" text="Telemovel" />
+                <TableColumn fx:id="dataCol" prefWidth="40.0" text="Data" />
+                <TableColumn fx:id="motivoCol" prefWidth="58.0" text="Motivo" />
+            <TableColumn fx:id="estadoCol" prefWidth="75.0" text="Estado" />
+                <TableColumn fx:id="custoCol" prefWidth="110.0" text="Custo" />
+                <TableColumn fx:id="nomeClinicaCol" prefWidth="75.0" text="Nome da Clinica" />
             </columns>
             <BorderPane.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -57,9 +32,17 @@
     <right>
         <VBox fx:id="BoxButtons" prefHeight="375.0" prefWidth="169.0" BorderPane.alignment="CENTER">
             <children>
-                <VBox fx:id="vBoxButtons" prefHeight="200.0" prefWidth="100.0">
+            <Label text="Consultas" textFill="#4397b5">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Bell MT" size="18.0" />
+               </font>
+            </Label>
+                <VBox fx:id="vBoxButtons" prefHeight="111.0" prefWidth="169.0">
                     <children>
-                        <TextField fx:id="nameField" promptText="Nome">
+                        <TextField fx:id="nameField" promptText="Nome Utente">
                             <opaqueInsets>
                                 <Insets />
                             </opaqueInsets>
@@ -72,36 +55,58 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </VBox.margin>
                         </TextField>
-                        <TextField fx:id="moradaField" promptText="Morada">
+                        <TextField fx:id="nomeClinicField" promptText="Nome Clinica">
                             <VBox.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </VBox.margin>
                         </TextField>
                     </children>
                 </VBox>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="285.0" text="Pesquisar" textAlignment="CENTER">
-                    <VBox.margin>
+            <RadioButton fx:id="radioButton" mnemonicParsing="false" text="Agendadas">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </RadioButton>
+            <HBox prefHeight="32.0" prefWidth="169.0">
+               <children>
+                      <Button mnemonicParsing="false" onAction="#pesquisarFilterHandler" prefHeight="25.0" prefWidth="108.0" text="Pesquisar" textAlignment="CENTER">
+                     <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </VBox.margin>
-                </Button>
-                <Label fx:id="telErrorLabel">
-                    <VBox.margin>
+                     </HBox.margin>
+                      </Button>
+                  <Button mnemonicParsing="false" onAction="#apagarFieldsHandler" prefHeight="25.0" prefWidth="74.0" text="Apagar">
+                     <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </VBox.margin>
-                </Label>
-                <Label fx:id="dataErrorLabel" visible="false">
-                    <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </VBox.margin>
-                </Label>
-                <Separator prefWidth="200.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+                <Separator prefHeight="19.0" prefWidth="74.0">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Separator>
+            <Button fx:id="irUtenteButton" mnemonicParsing="false" onAction="#irUtenteHandler" prefHeight="25.0" prefWidth="268.0" text="Ir Utente">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#irConsultaHandler" prefHeight="25.0" prefWidth="310.0" text="Ir Consulta">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
                 <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="251.0" text="Adiciona">
+                <Button mnemonicParsing="false" onAction="#addHandler" prefHeight="25.0" prefWidth="251.0" text="Adiciona">
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="398.0" text="Remove">
+            <Button mnemonicParsing="false" onAction="#efetivarHandler" prefHeight="25.0" prefWidth="329.0" text="Efetivar">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+                <Button mnemonicParsing="false" onAction="#removeHandler" prefHeight="25.0" prefWidth="398.0" text="Remove">
                     <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>

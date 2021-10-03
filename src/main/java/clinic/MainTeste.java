@@ -1,13 +1,10 @@
 package clinic;
 
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.sql.*;
+import java.util.Arrays;
 
 public class MainTeste {
     public static void main(String[] args) {
@@ -49,9 +46,6 @@ public class MainTeste {
                 String sql3 =
                         "INSERT OR REPLACE INTO utentes (id, nascimento, telemovel, idade, profissao, historico_familiar,historico_pessoal,nome,atividade_fisica) " +
                                 "VALUES (3, '2021-1-1',1,1,'profissao1','historico f','historico pess','nomeAlterado3','ativ fisica2')";//+
-                                //"ON DUPLICATE KEY UPDATE nascimento=VALUES(nascimento), telemovel=VALUES(telemovel), " +
-                                //"idade=VALUES(idade),profissao=VALUES(profissao), historico_familiar=VALUES(historico_familiar), " +
-                                //"historico_pessoal=VALUES(historico_pessoal), nome=VALUES(nome), atividade_fisica=VALUES(atividade_fisica);";
                 String sql2 = "insert into utentes (nascimento, telemovel, idade, profissao, historico_familiar,historico_pessoal,nome,atividade_fisica) " +
                         "VALUES ('2021-1-1',1,1,'profissao1','historico f','historico pess','nome1','ativ fisica2')";
 
@@ -67,19 +61,10 @@ public class MainTeste {
                 Statement stat3 = conn.createStatement();
                 Statement stat4 = conn.createStatement();
                 Statement stat5 = conn.createStatement();
-                //stat1.executeUpdate("DROP TABLE utentes");
-                //stat2.executeUpdate("DROP TABLE consultas");
-                //stat.executeUpdate(sqlUtente);
-                //stat1.executeUpdate(sqlConsulta);
-                  //stat2.executeUpdate(sql2);
-                //stat.executeUpdate(sql2);
-                //stat.executeUpdate(insertConsulta);
-                //stat3.executeUpdate(alterTable1);
-                //stat1.executeUpdate("DELETE FROM utentes WHERE id=2");
                 PreparedStatement pstmt = conn.prepareStatement("INSERT OR REPLACE INTO documentos (id,doc, fk_utente_id) " +
                         "VALUES (8,?,2)");
                 byte[] f = readFile("C:\\Users\\Asus\\Desktop\\clinica.png");
-                System.out.println(f);
+                System.out.println(Arrays.toString(f));
                 pstmt.setBytes(1, f);
                 pstmt.execute();
                 File file = new File("coco3.png");
@@ -94,13 +79,6 @@ public class MainTeste {
                         fos.write(buffer);
                     }
                 }
-               /* Stage stage = new Stage();
-                ImageView image = new ImageView(image1);
-                VBox vbox=new VBox();
-                vbox.getChildren().add(image);
-                Scene scene = new Scene(vbox);
-                stage.setScene(scene);
-                stage.show();*/
 
 
             }

@@ -159,17 +159,9 @@ public class Utente {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("\nUtente ").append(id);
-        sb.append("| nome:'").append(nome).append('\'');
-        sb.append(", nascimento:").append(nascimento);
-        sb.append(", telemovel:").append(telemovel);
-        sb.append(", idade:").append(idade);
-        sb.append(", profissao:'").append(profissao).append('\'');
-        sb.append(", historico_familiar:'").append(historico_familiar).append('\'');
-        sb.append(", historico_pessoal:'").append(historico_pessoal).append('\'');
-        sb.append(", atividade_fisica:'").append(atividade_fisica).append('\'');
-        sb.append(", morada:'").append(morada).append('\'');
-        sb.append(", clinicaID:'").append(clinicaID).append('\'');
+        final StringBuilder sb = new StringBuilder("Utente ").append(id);
+        sb.append(" | ").append(nome);
+
         return sb.toString();
     }
 }

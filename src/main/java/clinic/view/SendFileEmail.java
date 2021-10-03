@@ -52,9 +52,9 @@ public class SendFileEmail {
             message.setContent(multipart);
 
             Transport.send(message);
-            System.out.println("Message sent.");
+            System.out.println("Backup sent.");
         }catch (MessagingException | IOException e){
-            System.out.println("ERROOOOO: " + e);
+            System.out.println("Erro, provavelmente nao tens net" + e);
         }
     }
 }

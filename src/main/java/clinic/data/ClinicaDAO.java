@@ -1,7 +1,6 @@
 package clinic.data;
 
 import clinic.business.Clinica;
-import clinic.business.Utente;
 
 import java.sql.*;
 import java.util.Collection;
@@ -20,7 +19,6 @@ public class ClinicaDAO implements Map<Integer, Clinica> {
             String sql = "CREATE TABLE IF NOT EXISTS clinicas (" +
                     "  id INTEGER PRIMARY KEY," +
                     "  nome VARCHAR(45) NULL)";
-                    ;
             stm.executeUpdate(sql);
         } catch (SQLException e) {
             // Erro a criar tabela...
@@ -56,9 +54,6 @@ public class ClinicaDAO implements Map<Integer, Clinica> {
         return i;
     }
 
-    public int diarreia(){
-        return 0;
-    }
 
     /**
      * Método que verifica se existem turmas

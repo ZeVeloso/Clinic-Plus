@@ -18,9 +18,9 @@ import javafx.scene.shape.Line;
 
 public class FXCalendarUtility {
 
-	private static int MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
-	private static  SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy");
-	private SimpleDateFormat DISPLAY_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+	private static final int MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy");
+	private final SimpleDateFormat DISPLAY_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 	
 	private String[] SHORTEST_WEEK_DAYS ;  // {"","S","M","T","W","T","F","S"}
 	private String[] SHORT_WEEK_DAYS ;     // {"","Sun","Mon","Tue","Wed","Thu","Fri","Sat"}
@@ -65,7 +65,7 @@ public class FXCalendarUtility {
 	public static Calendar getDate(Integer day, Integer month, Integer year) {
 		 try {  
 			 String str_date=day+"/"+(month+1)+"/"+year;
-		     Date date = (Date)DATE_FORMAT.parse(str_date);  
+		     Date date = DATE_FORMAT.parse(str_date);
 		     Calendar c = getCalendar();
 		     c.setTime(date);
 		     return c;
@@ -91,7 +91,7 @@ public class FXCalendarUtility {
 	public String getFormattedDate(Integer day, Integer month, Integer year) {
 		 try {  
 			 String str_date=day+"/"+(month+1)+"/"+year;
-		     Date date = (Date)DATE_FORMAT.parse(str_date);  
+		     Date date = DATE_FORMAT.parse(str_date);
 		     return DISPLAY_DATE_FORMAT.format(date);
 		 } catch (ParseException e){
 			 LOG.fine(e.getMessage());
@@ -179,7 +179,7 @@ public class FXCalendarUtility {
 			String[] days =  new DateFormatSymbols(locale).getShortWeekdays();
 			String[] xsDays = new String[days.length];
 			for (int i=0;i<days.length;i++) {
-				xsDays[i] = (String) ((days[i].equals("")) ? days[i] : days[i].charAt(0)+"");
+				xsDays[i] = (days[i].equals("")) ? days[i] : days[i].charAt(0)+"";
 			}
 			return xsDays;
 		}if(type!=null && type.equalsIgnoreCase("s")){
@@ -203,9 +203,9 @@ public class FXCalendarUtility {
 	}
 	
 	public static String rgbToHex(Color color) {
-		int i = (int)Math.round((double)color.getRed() * 255D);
-        int j = (int)Math.round((double)color.getGreen() * 255D);
-        int k = (int)Math.round((double)color.getBlue() * 255D);
+		int i = (int)Math.round(color.getRed() * 255D);
+        int j = (int)Math.round(color.getGreen() * 255D);
+        int k = (int)Math.round(color.getBlue() * 255D);
     	return "#"+toHex(i)+toHex(j)+toHex(k) ; 
 	}
 	

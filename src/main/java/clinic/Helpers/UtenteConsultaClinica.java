@@ -10,6 +10,7 @@ public class UtenteConsultaClinica {
     private String dataConsulta;
     private String motivoConsulta;
     private float custoConsulta;
+    private String estadoConsulta;
     private int telemovelUtente;
     private String moradaUtente;
     private String dataNascimentoUtente;
@@ -51,7 +52,7 @@ public class UtenteConsultaClinica {
 
     public UtenteConsultaClinica(Integer idUtente, Integer idConsulta, String nomeUtente,
                                  String nomeClinica, String dataConsulta, String motivoConsulta, float custoConsulta,
-                                 int telemovelUtente, String dataNascimentoUtente, int idadeUtente) {
+                                 int telemovelUtente, String dataNascimentoUtente, int idadeUtente, String estadoConsulta) {
         this.idUtente = idUtente;
         this.idConsulta = idConsulta;
         this.idClinica = null;
@@ -64,6 +65,15 @@ public class UtenteConsultaClinica {
         this.moradaUtente = "";
         this.dataNascimentoUtente = dataNascimentoUtente;
         this.idadeUtente = idadeUtente;
+        this.estadoConsulta = estadoConsulta;
+    }
+
+    public String getEstadoConsulta() {
+        return estadoConsulta;
+    }
+
+    public void setEstadoConsulta(String estadoConsulta) {
+        this.estadoConsulta = estadoConsulta;
     }
 
     public Integer getIdUtente() {

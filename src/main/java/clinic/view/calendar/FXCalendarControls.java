@@ -20,7 +20,7 @@ public class FXCalendarControls {
 	 *
 	 */
 	class Arrow extends StackPane{
-		 private SimpleObjectProperty<Color> fillColor = new SimpleObjectProperty<Color>();
+		 private final SimpleObjectProperty<Color> fillColor = new SimpleObjectProperty<Color>();
 		 public Arrow(){
 			 this(Side.BOTTOM);
 		 }
@@ -109,8 +109,8 @@ public class FXCalendarControls {
 	 *
 	 */
 	class CalendarToggleButton extends StackPane{
-		private Text txt;
-		private StackPane sp;
+		private final Text txt;
+		private final StackPane sp;
 		public CalendarToggleButton(String text, Object userData){
 			
 			setUserData(userData);

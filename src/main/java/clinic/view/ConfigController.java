@@ -1,25 +1,16 @@
 package clinic.view;
 
 import clinic.data.ConfigDAO;
-import clinic.data.DAO;
 import clinic.data.DAOconfig;
 import clinic.view.Box.AlertBox;
 import javafx.application.Platform;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 public class ConfigController {
 
@@ -36,7 +27,6 @@ public class ConfigController {
             File file = fileChooser.showOpenDialog(null);
             String path = file.getAbsolutePath().replace("\\","\\\\");
             DAOconfig.URL=path;
-            System.out.println(path);
             ConfigDAO.put(path);
 
         });

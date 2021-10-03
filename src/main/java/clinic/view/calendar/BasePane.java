@@ -25,14 +25,14 @@ import clinic.view.calendar.FXCalendarCell.DateCell;
 import clinic.view.calendar.FXCalendarControls;
 
 public class BasePane extends Group {
-	private DatePicker datePicker;
+	private final DatePicker datePicker;
 	private StackPane navigatorPane;
 	private StackPane weekPane;
 	private StackPane deskPane;
 	private StackPane footerPane;
 	private Label displayLabel;
-	private ObservableList<WeekCell> weekCellList = FXCollections.observableArrayList();
-	private ObservableList<DateCell> dateCellList = FXCollections.observableArrayList();
+	private final ObservableList<WeekCell> weekCellList = FXCollections.observableArrayList();
+	private final ObservableList<DateCell> dateCellList = FXCollections.observableArrayList();
 	public static final String WEEKNUMER_LABEL = "Wk.";
 	private FXCalendarControls.BaseNavigatorArrowButton prevMonthBtn;
 
@@ -309,12 +309,8 @@ public class BasePane extends Group {
 				}
 
 				// Highlighting the current system date.
-				if (systemDate.get(Calendar.DAY_OF_MONTH) == dummyDate.get(Calendar.DAY_OF_MONTH) && systemDate.get(Calendar.MONTH) == dummyDate.get(Calendar.MONTH)
-						&& systemDate.get(Calendar.YEAR) == dummyDate.get(Calendar.YEAR)) {
-					dateCell.setCellFocused(true);
-				} else {
-					dateCell.setCellFocused(false);
-				}
+				dateCell.setCellFocused(systemDate.get(Calendar.DAY_OF_MONTH) == dummyDate.get(Calendar.DAY_OF_MONTH) && systemDate.get(Calendar.MONTH) == dummyDate.get(Calendar.MONTH)
+						&& systemDate.get(Calendar.YEAR) == dummyDate.get(Calendar.YEAR));
 
 				// Highlighting the Selected date.
 				if (fxDate == dummyDate.get(Calendar.DAY_OF_MONTH) && fxMonth == dummyDate.get(Calendar.MONTH) && fxYear == dummyDate.get(Calendar.YEAR)) {

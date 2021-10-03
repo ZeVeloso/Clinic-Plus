@@ -10,13 +10,13 @@ import javafx.scene.paint.Color;
 
 public class DatePicker extends StackPane {
 
-	private SimpleIntegerProperty selectedDate = new SimpleIntegerProperty();
-	private SimpleIntegerProperty selectedMonth = new SimpleIntegerProperty();
-	private SimpleIntegerProperty selectedYear = new SimpleIntegerProperty();
-	private Rectangle2D calendarBounds = new Rectangle2D(100, 100, 205, 196);
-	private FXCalendar fxCalendar;
-	private BasePane basePane;
-	private TopPane topPane;
+	private final SimpleIntegerProperty selectedDate = new SimpleIntegerProperty();
+	private final SimpleIntegerProperty selectedMonth = new SimpleIntegerProperty();
+	private final SimpleIntegerProperty selectedYear = new SimpleIntegerProperty();
+	private final Rectangle2D calendarBounds = new Rectangle2D(100, 100, 205, 196);
+	private final FXCalendar fxCalendar;
+	private final BasePane basePane;
+	private final TopPane topPane;
 
 	public DatePicker(FXCalendar fxCalendar) {
 		super();

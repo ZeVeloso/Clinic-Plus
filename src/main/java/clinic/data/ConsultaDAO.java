@@ -134,9 +134,6 @@ public class ConsultaDAO implements Map<Integer, Consulta> {
              ResultSet rs = stm.executeQuery("SELECT * FROM consultas WHERE id="+key)) {
             if (rs.next()) {  // A chave existe na tabela
                 //ResultSet rs1 = stm1.executeQuery("SELECT * FROM utentes WHERE id= "+rs.getInt("fk_utente_id"));
-                /*Utente u = new Utente(rs1.getInt("id"), rs1.getString("nascimento"), rs1.getInt("telemovel"),
-                        rs1.getInt("idade"), rs1.getString("profissao"),rs1.getString("historico_familiar"),
-                        rs1.getString("historico_pessoal"),rs1.getString("nome"),rs1.getString("atividade_fisica"));*/
                 // Reconstruir o aluno com os dados obtidos da BD - a chave estranjeira da turma, não é utilizada aqui.
                 a = new Consulta(rs.getInt("id"), rs.getString("dataa"), rs.getFloat("custo"),
                         rs.getString("obs"), rs.getString("estado"),rs.getString("motivo"), rs.getInt("fk_utente_id"));

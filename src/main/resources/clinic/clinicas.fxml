@@ -2,40 +2,10 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <BorderPane fx:id="borderPane" prefHeight="497.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.ClinicasController">
-   <top>
-      <HBox prefHeight="7.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="logoImageView" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-            <MenuBar>
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-              </menus>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </MenuBar>
-         </children>
-      </HBox>
-   </top>
    <right>
       <VBox prefHeight="462.0" prefWidth="147.0" BorderPane.alignment="CENTER">
          <children>
@@ -47,7 +17,7 @@
                   <Font name="Constantia" size="13.0" />
                </font>
             </Label>
-            <VBox fx:id="vBoxFilter" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="vBoxFilter">
                <children>
                   <TextField fx:id="nomeField" promptText="Nome">
                      <VBox.margin>
@@ -66,17 +36,26 @@
                   </TextField>
                </children>
             </VBox>
-            <Button mnemonicParsing="false" onAction="#filterUtenteHandler" prefHeight="25.0" prefWidth="215.0" text="Pesquisar">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Separator prefWidth="200.0">
+            <HBox>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#filterUtenteHandler" prefHeight="25.0" prefWidth="73.0" text="Pesquisar">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clearUtenteFieldHandler" text="Apagar">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Separator>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Separator>
-            <Button fx:id="addUtenteHandler" mnemonicParsing="false" onAction="#addUtenteHandler" prefHeight="25.0" prefWidth="153.0" text="Adicionar Utente">
+            <Button fx:id="addUtenteHandler" mnemonicParsing="false" onAction="#addUtenteHandler" prefHeight="25.0" prefWidth="184.0" text="Adicionar Utente">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -86,7 +65,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="206.0" text="Ir Utente - n funciona">
+            <Button fx:id="irButton" mnemonicParsing="false" onAction="#irUtenteHandler" prefHeight="25.0" prefWidth="206.0" text="Ir Utente">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -110,12 +89,21 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" onAction="#filterClinicaHandler" prefHeight="25.0" prefWidth="280.0" text="Pesquisar">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Separator prefWidth="200.0">
+            <HBox>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#filterClinicaHandler" prefHeight="25.0" prefWidth="75.0" text="Pesquisar">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clearFieldsClinicaHandler" prefHeight="25.0" prefWidth="60.0" text="Apagar">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Separator>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

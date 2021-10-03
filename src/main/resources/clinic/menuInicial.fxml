@@ -2,73 +2,83 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane fx:id="borderPane" prefHeight="486.0" prefWidth="684.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.MenuInicialController">
-   <top>
-      <HBox prefHeight="22.0" prefWidth="750.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="logoImageView" fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" />
-            <MenuBar style="-fx-background-color: #03fff8;">
-              <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
-                  <Menu mnemonicParsing="false" text="Unspecified Menu">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                    </items>
-                  </Menu>
-              </menus>
-            </MenuBar>
-            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button disable="true" mnemonicParsing="false" onAction="#configHandler" text="Config">
-               <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-   </top>
    <right>
       <VBox prefHeight="461.0" prefWidth="194.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="adicionarClinicaButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#adicionarClinica" prefHeight="25.0" prefWidth="374.0" text="Adicionar Clinica" textAlignment="CENTER">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="pesquisarClinicasButton" mnemonicParsing="false" onAction="#pesquisarClinicasHandler" prefHeight="25.0" prefWidth="348.0" text="Pesquisar Clinicas">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Separator prefWidth="200.0" />
-            <Button fx:id="pesquisarUtentesButton" alignment="CENTER" mnemonicParsing="false" onAction="#pesquisarUtentes" prefHeight="25.0" prefWidth="388.0" text="Pesquisar" textAlignment="CENTER">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Separator prefWidth="200.0" />
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="400.0" text="Pesquisar - Nao da" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+            <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #4397b5;">
+               <children>
+                  <Label text="Clinicas" textFill="#4397b5">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Bell MT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="pesquisarClinicasButton" mnemonicParsing="false" onAction="#pesquisarClinicasHandler" prefHeight="25.0" prefWidth="348.0" text="Pesquisar">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="adicionarClinicaButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#adicionarClinica" prefHeight="25.0" prefWidth="374.0" text="Adicionar" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Utentes" textFill="#4397b5">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Bell MT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="pesquisarUtentesButton" alignment="CENTER" mnemonicParsing="false" onAction="#pesquisarUtentes" prefHeight="25.0" prefWidth="388.0" text="Pesquisar" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="adicionarUtenteButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#adicionarUtenteHandler" prefHeight="25.0" prefWidth="374.0" text="Adicionar" textAlignment="CENTER">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Consultas" textFill="#4397b5">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Bell MT" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="pesquisarConsultaButton" alignment="CENTER" mnemonicParsing="false" onAction="#pesquisarConsultasHandler" prefHeight="25.0" prefWidth="400.0" text="Pesquisar" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#addConsultaHandler" prefHeight="25.0" prefWidth="298.0" text="Adicionar">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitHandler" prefHeight="25.0" prefWidth="275.0" text="Sair" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
       </VBox>
    </right>
 </BorderPane>

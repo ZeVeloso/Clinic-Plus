@@ -3,30 +3,27 @@ package clinic.view;
 
 import clinic.Helpers.UtenteConsultaClinica;
 import clinic.business.ClinicFacade;
-import clinic.business.Clinica;
-import clinic.business.Utente;
 import clinic.view.Box.AlertBox;
-import clinic.view.Helpers.*;
+import clinic.view.Helpers.DateHelper;
+import clinic.view.Helpers.GoToHelper;
+import clinic.view.Helpers.MenuBarHelper;
+import clinic.view.Helpers.UtenteClinicaHelper;
 import clinic.view.calendar.FXCalendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.Collection;
-import java.util.Date;
 import java.util.ResourceBundle;
-
 
 public class Controller implements Initializable {
 
@@ -59,8 +56,6 @@ public class Controller implements Initializable {
     @FXML
     private TextField nameField;
 
-    @FXML
-    private DatePicker nascField;
 
     @FXML
     private TextField telField;
@@ -68,10 +63,6 @@ public class Controller implements Initializable {
     @FXML
     private TextField moradaField;
 
-    @FXML
-    private Label telErrorLabel;
-    @FXML
-    private Label dataErrorLabel;
     @FXML
     private ImageView logoImageView;
 
@@ -83,6 +74,18 @@ public class Controller implements Initializable {
 
     private FXCalendar calendar;
 
+    public ClinicFacade model;
+
+    private ObservableList<UtenteConsultaClinica> dataNotes;
+
+    @FXML
+    private void clearFieldsHandler(){
+        nameField.clear();
+        telField.clear();
+        moradaField.clear();
+        calendar.clear();
+    }
+
     @FXML
     private void filterUtentesHandler() throws ParseException {
         Collection<UtenteConsultaClinica> fitlered = UtenteClinicaHelper.filterUtenteCCHandler(model,nameField,telField, moradaField, calendar);
@@ -91,10 +94,8 @@ public class Controller implements Initializable {
 
     @FXML
     private void addUtente() throws IOException {
-
         GoToHelper.goToNewStage("addUtente.fxml", 500,  190);
         this.refreshData();
-
     }
 
     @FXML
@@ -110,19 +111,14 @@ public class Controller implements Initializable {
 
     }
 
-    public ClinicFacade model;
-
-    private ObservableList<UtenteConsultaClinica> dataNotes;
-
     private void refreshData(){
-
         Collection<UtenteConsultaClinica> colec =  this.model.getUtentesClinica();
         UtenteClinicaHelper.refreshDataFilter(colec, tableUtentes, dataNotes);
-
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         this.dateHelper = new DateHelper();
         this.model= new ClinicFacade();
         this.calendar = new FXCalendar();
@@ -131,6 +127,7 @@ public class Controller implements Initializable {
                 moradaCol,1);
         MenuBarHelper.setupMenuBar(borderPane);
 
+        calendar = new FXCalendar();
         UtenteClinicaHelper.setupFilterBox(vBoxButtons, calendar);
 
 
@@ -139,48 +136,11 @@ public class Controller implements Initializable {
         );
 
 
-        telErrorLabel.setManaged(false);
-        dataErrorLabel.setManaged(false);
-
-        //dateHelper.convertDatePicker(nascField);
-
         Collection<UtenteConsultaClinica> colec =  model.getUtentesClinica();
-        System.out.println(colec.toString());
         dataNotes.addAll(colec);
 
         tableUtentes.setItems(dataNotes);
 
-    }
-
-    private void textErrorLabelHandler(TextField telemovel, DatePicker dataPicker){
-        telemovel.focusedProperty().addListener((arg0, oldValue, newValue) -> {
-            if (!newValue) {
-                if (!telemovel.getText().matches("[0-9]+")) {
-                    telemovel.setStyle("-fx-text-box-border: red; -fx-focus-color: red ;");
-                    telErrorLabel.setManaged(true);
-                    telErrorLabel.setVisible(true);
-                    telErrorLabel.setText("Campo telemovel só aceita números!");
-                } else {
-                    telemovel.setStyle("-fx-border-width: 0px ;");
-                    telErrorLabel.setManaged(false);
-                    telErrorLabel.setVisible(false);
-                }
-            }
-        });
-        dataPicker.focusedProperty().addListener((arg0, oldValue, newValue) -> {
-            if (!newValue) {
-                    if(dataPicker.getValue()!=null) {
-                        dataPicker.setStyle("-fx-border-width: 0px ;");
-                        dataErrorLabel.setManaged(false);
-                        dataErrorLabel.setVisible(false);
-                    }else {
-                    dataPicker.setStyle("-fx-text-box-border: red; -fx-focus-color: red ;");
-                    dataErrorLabel.setManaged(true);
-                    dataErrorLabel.setVisible(true);
-                    dataErrorLabel.setText("Data do tipo dd-MM-yyyy");
-                }
-            }
-        });
     }
 
 }

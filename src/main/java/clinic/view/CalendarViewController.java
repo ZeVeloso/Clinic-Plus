@@ -7,25 +7,20 @@ import clinic.business.Utente;
 import clinic.view.Helpers.DateHelper;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Calendar.Style;
-import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
-import com.calendarfx.view.DateControl;
 import javafx.application.Platform;
-import javafx.event.Event;
-import javafx.scene.control.skin.DateCellSkin;
+import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Callback;
-import org.controlsfx.control.action.Action;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.List;
 
 public class CalendarViewController {
+
 
     public static void initialize(BorderPane borderPane) {
         ClinicFacade model = new ClinicFacade();
@@ -33,15 +28,16 @@ public class CalendarViewController {
         CalendarView calendarView = new CalendarView();
 
         Calendar consultas = new Calendar("Consultas");
-
-
+        calendarView.setPadding(new Insets(5,5,5,5));
 
         consultas.setStyle(Style.STYLE2);
+        calendarView.setShowPrintButton(false);
+        calendarView.setShowAddCalendarButton(false);
 
-        CalendarSource myCalendarSource = new CalendarSource("My Calendars");
+        CalendarSource myCalendarSource = new CalendarSource("Consultas");
 
         calendarView.setRequestedTime(LocalTime.now());
-        Collection<Consulta> colll = model.getConsultas();
+
         Collection<Pair<Consulta, Utente>> coll = model.getTudo();
         for(Pair<Consulta, Utente> c: coll){
             Entry<String> entry = new Entry<>(c.getFirst().getId() + " " + c.getSecond().getNome());
@@ -79,7 +75,7 @@ public class CalendarViewController {
                     }
 
                 }
-            };
+            }
         };
 
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);

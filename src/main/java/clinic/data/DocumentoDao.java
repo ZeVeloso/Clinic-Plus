@@ -1,6 +1,5 @@
 package clinic.data;
 
-import clinic.business.Clinica;
 import clinic.business.Documento;
 
 import java.sql.*;
@@ -21,12 +20,12 @@ public class DocumentoDao implements Map<Integer, Documento>{
                     "  id INTEGER PRIMARY KEY," +
                     "  doc BLOB NULL," +
                     "  nome VARCHAR(64) NULL,"+
+                    "  type VARCHAR(64) NULL,"+
                     " fk_utente_id INT NULL," +
                     " FOREIGN KEY (fk_utente_id)" +
                     " REFERENCES utentes (id)" +
                     " ON DELETE CASCADE " +
                     " ON UPDATE NO ACTION);";
-            ;
             stm.executeUpdate(sql);
         } catch (SQLException e) {
             // Erro a criar tabela...
@@ -180,17 +179,17 @@ public class DocumentoDao implements Map<Integer, Documento>{
      */
     @Override
     public Documento remove(Object key) {
-        Documento t = this.get(key);
+        Documento t = null;
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate("PRAGMA foreign_keys = ON");
-            stm.executeUpdate("DELETE FROM clinicas WHERE id='"+key+"'");
+            stm.executeUpdate("DELETE FROM documentos WHERE id="+key);
         } catch (Exception e) {
             // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
-        return t;
+        return null;
     }
 
     /**

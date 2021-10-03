@@ -27,7 +27,7 @@ public class UtentesDAOHelp {
         return res;
     }
 
-    public Collection<Utente> getUtentesFilter(String nome, String telemovel, String nascimento, String morada) {
+    public Collection<Utente> getUtentesFilter(String nome, String telemovel, String nascimento, String morada, String idClinica) {
         Collection<Utente> res1 = new HashSet<>();
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement();
@@ -35,6 +35,7 @@ public class UtentesDAOHelp {
                      "SELECT * FROM utentes where nome like '%" + nome +"%'"+
                              "AND telemovel like '%" + telemovel +"%'"+
                              "AND nascimento like '%" + nascimento +"%'"+
+                             "AND fk_clinica_id like '%" + idClinica + "%'"+
                              "AND morada like '%" + morada +"%';")) {
             while (rs.next()) {  // A chave existe na tabela
 

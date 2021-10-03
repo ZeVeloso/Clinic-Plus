@@ -3,6 +3,8 @@ module clinic {
     requires javafx.fxml;
     requires java.sql;
     requires com.calendarfx.view;
+    requires mail;
+    requires activation;
 
 
     opens clinic to javafx.fxml;

@@ -31,8 +31,7 @@ public class UtenteClinicaHelper {
     public static void setupInit(ImageView logoImageView, TableView<UtenteConsultaClinica> tableUtentes,
                            TableColumn idCol, TableColumn nameCol, TableColumn idadeCol, TableColumn telCol, TableColumn nascCol, TableColumn moradaCol, int id){
 
-        DateHelper dateHelper = new DateHelper();
-        ClinicFacade model= new ClinicFacade();
+
         tableUtentes.getSelectionModel().setSelectionMode(
                 SelectionMode.MULTIPLE
         );
@@ -62,25 +61,22 @@ public class UtenteClinicaHelper {
                         && event.getClickCount() == 2) {
 
                     UtenteConsultaClinica clickedRow = row.getItem();
-                    Stage stage1 = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                    /*Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                     Scene scena = ((Node)event.getSource()).getScene();
-                    Parent root;
+                    Parent root;*/
                     try {
-                        FXMLLoader loader = new FXMLLoader(MainFX.class.getResource("perfilUtente.fxml"));
+                        /*FXMLLoader loader = new FXMLLoader(MainFX.class.getResource("perfilUtente.fxml"));
                         root = loader.load();
                         ControllerUtente c=loader.getController();
-                        stage1.setTitle("Clinic +");
+                        stage.setTitle("Clinic +");
                         c.displayID(clickedRow.getIdUtente(), id);
-                        stage1.setScene(new Scene(root, scena.getWidth(), scena.getHeight()));
-                    } catch (IOException e) {
+                        Scene scene = new Scene(root, scena.getWidth(), scena.getHeight());
+                        scene.getStylesheets().add(MainFX.class.getResource("calendar_styles.css").toExternalForm());
+                        stage.setScene(scene);*/
+                        GoToHelper.gotoSameStageController((Node)event.getSource(),"perfilUtente.fxml",clickedRow.getIdUtente(), id);
+                    } catch (IOException | ParseException e) {
                         e.printStackTrace();
                     }
-
-                }
-                if (! row.isEmpty() && event.getButton()== MouseButton.SECONDARY
-                        && event.getClickCount() == 2) {
-
-                    UtenteConsultaClinica clickedRow = row.getItem();
 
                 }
             });
@@ -89,7 +85,6 @@ public class UtenteClinicaHelper {
     }
 
     public static void setupFilterBox(VBox vbox, FXCalendar calendar){
-        calendar = new FXCalendar();
         calendar.setBaseColor(Color.web("#0099ff"));
         FXCalendar.setMargin(calendar, new Insets(5,5,5,5));
         calendar.setMinWidth(50);
@@ -105,7 +100,7 @@ public class UtenteClinicaHelper {
         table.setItems(data);
     }
 
-    public static Collection<Utente> filterUtenteHandler(ClinicFacade model, TextField nomeField, TextField telemovelField, TextField moradaField, FXCalendar calendar) throws ParseException {
+    public static Collection<Utente> filterUtenteHandler(ClinicFacade model, TextField nomeField, TextField telemovelField, TextField moradaField, FXCalendar calendar, String idClinica) throws ParseException {
         DateHelper dateHelper = new DateHelper();
         String nome = nomeField.getText();
         String telemovel =  telemovelField.getText();
@@ -116,7 +111,7 @@ public class UtenteClinicaHelper {
         if(telemovel==null) telemovel="";
         if(morada==null) morada="";
         if(data!=null) novaData = dateHelper.formatDateCalendar(data.toString());
-        return model.getUtentesFilter(nome, telemovel, novaData, morada);
+        return model.getUtentesFilter(nome, telemovel, novaData, morada, idClinica);
 
     }
 
@@ -131,6 +126,7 @@ public class UtenteClinicaHelper {
         if(telemovel==null) telemovel="";
         if(morada==null) morada="";
         if(data!=null) novaData = dateHelper.formatDateCalendar(data.toString());
+        System.out.println(novaData + data);
         return model.getUtentesConsultaClinicaFilter(nome, telemovel, novaData, morada);
 
     }
