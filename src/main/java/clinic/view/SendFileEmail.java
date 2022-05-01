@@ -21,8 +21,8 @@ public class SendFileEmail {
         prop.put("mail.smtp.port", "25");
         prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
-        final String username = "clinicaappmais@gmail.com";//
-        final String password = "ClinicaPaulo";
+        final String username = "*****";//
+        final String password = "*****";
         try{
             Session session = Session.getInstance(prop, new Authenticator() {
                 @Override
@@ -33,9 +33,9 @@ public class SendFileEmail {
 
             // -- Create a new message --
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("clinicaappmais@gmail.com"));
+            message.setFrom(new InternetAddress("*****"));
             message.setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse("veloso.tribos@gmail.com"));
+                    Message.RecipientType.TO, InternetAddress.parse("*****"));
             message.setSubject("Backup DB");
 
             LocalDateTime now = LocalDateTime.now();
