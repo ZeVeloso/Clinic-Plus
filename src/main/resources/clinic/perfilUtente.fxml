@@ -6,19 +6,19 @@
 
 <BorderPane fx:id="borderPane" minHeight="100.0" minWidth="200.0" prefHeight="671.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.ControllerUtente">
    <left>
-      <VBox prefHeight="452.0" prefWidth="132.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="413.0" prefWidth="175.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="addConsultaButton" mnemonicParsing="false" onAction="#addConsulta" prefHeight="25.0" prefWidth="135.0" text="Adicionar Consulta">
+            <Button fx:id="addConsultaButton" mnemonicParsing="false" onAction="#addConsulta" prefHeight="24.0" prefWidth="281.0" text="Adicionar Consulta">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#cancelHandler" prefHeight="25.0" prefWidth="133.0" text="Cancelar Consulta">
+            <Button mnemonicParsing="false" onAction="#cancelHandler" prefHeight="24.0" prefWidth="209.0" text="Cancelar Consulta">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#efetivarConsultaHandler" prefHeight="25.0" prefWidth="127.0" text="Efetivar Consulta">
+            <Button mnemonicParsing="false" onAction="#efetivarConsultaHandler" prefHeight="24.0" prefWidth="218.0" text="Efetivar Consulta">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -28,12 +28,12 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Separator>
-            <Button fx:id="apagarUtenteButton" mnemonicParsing="false" onAction="#apagarUtenteHandler" prefHeight="25.0" prefWidth="131.0" text="Remover Utente">
+            <Button fx:id="apagarUtenteButton" mnemonicParsing="false" onAction="#apagarUtenteHandler" prefHeight="24.0" prefWidth="188.0" text="Remover Utente">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="updateButton" defaultButton="true" mnemonicParsing="false" onAction="#updateUtente" prefHeight="25.0" prefWidth="134.0" text="Guardar">
+            <Button fx:id="updateButton" defaultButton="true" mnemonicParsing="false" onAction="#updateUtente" prefHeight="24.0" prefWidth="212.0" text="Guardar">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

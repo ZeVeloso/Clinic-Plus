@@ -1,25 +1,19 @@
 package clinic.view.Helpers;
 
 import clinic.Helpers.UtenteConsultaClinica;
-import clinic.MainFX;
 import clinic.business.ClinicFacade;
 import clinic.business.Utente;
-import clinic.view.ControllerUtente;
 import clinic.view.calendar.FXCalendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.ParseException;

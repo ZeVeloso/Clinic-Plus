@@ -1,6 +1,5 @@
 package clinic.view;
 
-import clinic.Helpers.UtenteConsultaClinica;
 import clinic.MainFX;
 import clinic.business.*;
 import clinic.view.Add.AddConsultaController;
@@ -9,7 +8,6 @@ import clinic.view.Box.ConfirmBox;
 import clinic.view.Helpers.DateHelper;
 import clinic.view.Helpers.GoToHelper;
 import clinic.view.Helpers.MenuBarHelper;
-import clinic.view.Helpers.UtenteClinicaHelper;
 import clinic.view.calendar.FXCalendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -240,7 +238,7 @@ public class ControllerUtente {
         if(changed) {
             answer= ConfirmBox.display("Confirmação","Dados nao guardados... Pretende sair?");
         }
-        if(answer==true) {
+        if(answer) {
             if(idCena==1)
                 GoToHelper.goToSameStage(voltarButton, "utentes.fxml");
             else if(idCena==2)
@@ -297,11 +295,15 @@ public class ControllerUtente {
         calendarFilter.setMinWidth(50);
         hboxFilter.getChildren().add(1,calendarFilter);
 
-        DateFormat inputFormat = new SimpleDateFormat(
-                "dd-MM-yyyy", Locale.ENGLISH);
-        Date data = inputFormat.parse(u.getNascimento());
+        try {
+            DateFormat inputFormat = new SimpleDateFormat(
+                    "dd-MM-yyyy", Locale.ENGLISH);
+            Date data = inputFormat.parse(u.getNascimento());
+            calendar.setValue(data);
+        } catch (ParseException e){
+            AlertBox.display("Error","Data nao especificada");
+        }
 
-        calendar.setValue(data);
         idField.setText(String.valueOf(u.getId()));
         nomeField.setText(u.getNome());
         telField.setText(String.valueOf(u.getTelemovel()));
@@ -399,9 +401,7 @@ public class ControllerUtente {
 
     }
     private void textAreaDetectNewInput(TextArea textArea) {
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            changed = true;
-        });
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> changed = true);
     }
     private void datePickerDetectedNewInput(FXCalendar datePicker){
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -412,9 +412,7 @@ public class ControllerUtente {
     }
 
     private void textFieldDetectNewInput(TextField textField){
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            changed=true;
-        });
+        textField.textProperty().addListener((observable, oldValue, newValue) -> changed=true);
     }
     private void choiceBoxDetectNewInput(ChoiceBox textField){
         textField.valueProperty().addListener((observable, oldValue, newValue) -> {

@@ -1,6 +1,5 @@
 package clinic.view;
 
-import clinic.MainFX;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

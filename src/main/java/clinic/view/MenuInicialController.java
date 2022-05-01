@@ -8,10 +8,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,14 +44,11 @@ public class MenuInicialController implements Initializable {
 
     @FXML
     public void exitHandler(){
-        boolean bool = ConfirmBox.display("Backup","Deseja enviar um backup da base de dados para o email?");
-        if (bool) {
-
-            AlertBox.display("Backup", "Loading backup... Nao feches a aplicação\nFechar esta janela para continuar");
-            SendFileEmail.main();
+        boolean boolLeft = ConfirmBox.display("Backup","Quer sair? Todos os dados nao guardados serão apagados");
+        if (boolLeft) {
+            Platform.exit();
+            System.exit(0);
         }
-        Platform.exit();
-        System.exit(0);
     }
 
     @FXML
@@ -79,6 +73,13 @@ public class MenuInicialController implements Initializable {
     @FXML
     public void pesquisarClinicasHandler() throws IOException {
         GoToHelper.goToSameStage(pesquisarClinicasButton, "clinicas.fxml");
+    }
+
+    @FXML
+    public void backupButtonHandler(){
+        AlertBox.display("Backup", "Loading backup... Nao feches a aplicação\nFechar esta janela para continuar");
+        SendFileEmail.main();
+        //AlertBox.display("Backup", "Done em principio! Ta num mail meu... ");
     }
 
     @Override

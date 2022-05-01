@@ -1,10 +1,8 @@
 package clinic.view;
 
 import clinic.Helpers.UtenteConsultaClinica;
-import clinic.MainFX;
 import clinic.business.ClinicFacade;
 import clinic.business.Consulta;
-import clinic.business.Utente;
 import clinic.view.Box.AlertBox;
 import clinic.view.Helpers.DateHelper;
 import clinic.view.Helpers.GoToHelper;
@@ -14,17 +12,13 @@ import clinic.view.calendar.FXCalendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;

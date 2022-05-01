@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 
 public class CalendarViewController {
@@ -39,17 +40,20 @@ public class CalendarViewController {
         calendarView.setRequestedTime(LocalTime.now());
 
         Collection<Pair<Consulta, Utente>> coll = model.getTudo();
-        for(Pair<Consulta, Utente> c: coll){
-            Entry<String> entry = new Entry<>(c.getFirst().getId() + " " + c.getSecond().getNome());
-            entry.setInterval(LocalDate.now());
-            entry.changeStartDate(LocalDate.parse(c.getFirst().getData().split(" ")[0],DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-            entry.changeEndDate  (LocalDate.parse(c.getFirst().getData().split(" ")[0],DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-            entry.changeStartTime(LocalTime.parse(c.getFirst().getData().split(" ")[1]));
-            entry.changeEndTime(LocalTime.parse(c.getFirst().getData().split(" ")[1]).plusMinutes(45));
-            entry.setLocation(c.getSecond().getClinicaID().toString());
-            consultas.addEntry(entry);
+        try {
+            for (Pair<Consulta, Utente> c : coll) {
+                Entry<String> entry = new Entry<>(c.getFirst().getId() + " " + c.getSecond().getNome());
+                entry.setInterval(LocalDate.now());
+                entry.changeStartDate(LocalDate.parse(c.getFirst().getData().split(" ")[0], DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                entry.changeEndDate(LocalDate.parse(c.getFirst().getData().split(" ")[0], DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                entry.changeStartTime(LocalTime.parse(c.getFirst().getData().split(" ")[1]));
+                entry.changeEndTime(LocalTime.parse(c.getFirst().getData().split(" ")[1]).plusMinutes(45));
+                entry.setLocation(c.getSecond().getClinicaID().toString());
+                consultas.addEntry(entry);
+            }
+        } catch (DateTimeParseException k){
+            System.out.println("a");
         }
-
         myCalendarSource.getCalendars().add(0,consultas);
         calendarView.getCalendarSources().addAll(myCalendarSource);
         calendarView.setDefaultCalendarProvider(param -> consultas);

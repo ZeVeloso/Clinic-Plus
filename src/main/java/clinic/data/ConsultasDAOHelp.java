@@ -1,6 +1,5 @@
 package clinic.data;
 
-import clinic.Helpers.UtenteConsultaClinica;
 import clinic.business.Consulta;
 
 import java.sql.*;
@@ -8,6 +7,25 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class ConsultasDAOHelp {
+
+    public float getMoneyMes(String mes, String ano) {
+        float res = 0;
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery(
+                     "SELECT SUM(custo) as custo from consultas WHERE dataa like '%-" +mes + "-"+ ano +"%'")) {
+            while (rs.next()) {  // A chave existe na tabela
+                  res = rs.getFloat("custo");
+            }
+
+        } catch (SQLException e) {
+            // Database error!
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return res;
+
+    }
 
     public Collection<Consulta> getConsulta(int id) {
         Collection<Consulta> res1 = new HashSet<>();

@@ -58,12 +58,16 @@ public class AddUtenteController implements Initializable {
     @FXML
     public void adicionarHandler() throws ParseException {
 
-
+        try {
         String name = nomeField.getText();
         String tel = telField.getText();
+
+
         String nasc = calendar.getValue().toString();
-        String morada = moradaField.getText();
         String novaData = dateHelper.formatDateCalendar(nasc);
+
+        String morada = moradaField.getText();
+        //String novaData = dateHelper.formatDateCalendar(nasc);
         Clinica clinica;
         if(!clinicaChooser.getItems().isEmpty())
             clinica = clinicaChooser.getSelectionModel().getSelectedItem();
@@ -90,6 +94,10 @@ public class AddUtenteController implements Initializable {
             AlertBox.display("Erro", "Telemovel nao é um numero EX:961231231");
             telField.clear();
         }
+
+    } catch (NullPointerException e){
+        AlertBox.display("Erro", "Preencher todos os campos com *1");
+    }
 
     }
 

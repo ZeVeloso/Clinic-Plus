@@ -34,20 +34,22 @@ public class AddConsultaController {
     private TextField horaField;
 
 
-    public boolean display(int id){
+    public boolean display(int id) {
         ClinicFacade c = new ClinicFacade();
         this.dateHelper = new DateHelper();
 
         dateHelper.convertDatePicker(dataField);
 
         addButton.setOnAction(e -> {
+            try{
             String data = dataField.getValue().toString();
             String dataFormatada = dateHelper.formatDate(data);
             String hora = horaField.getText();
-            try{
+            try {
                 LocalTime.parse(hora);
-            } catch (DateTimeParseException | NullPointerException a){
-                hora = hora + ":00";
+            } catch (DateTimeParseException | NullPointerException a) {
+                if (hora.length() == 1) hora = "0" + hora + ":00";
+                else hora = hora + ":00";
             }
             String dataHora = dataFormatada + " " + hora;
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -56,31 +58,36 @@ public class AddConsultaController {
 
             System.out.println(dataHora + " " + id);
             Collection<Consulta> colec = c.getConsultas();
-            boolean flag=true;
-            for(Consulta u: colec){
+            boolean flag = true;
+            for (Consulta u : colec) {
                 try {
                     d1 = format.parse(dataHora);
                     d2 = format.parse(u.getData());
                 } catch (ParseException g) {
-                    g.printStackTrace();
+                    //g.printStackTrace();
+                    AlertBox.display("Error", "Data e hora nao estão corretas");
                 }
                 long diff = d2.getTime() - d1.getTime();
 
                 long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
 
-                if (u.getData().equals(dataHora) || (minutes<45 && minutes >-45)) {
+                if (u.getData().equals(dataHora) || (minutes < 45 && minutes > -45)) {
                     flag = false;
                     break;
                 }
             }
 
-            if(flag) {
-                c.adicionaConsulta(new Consulta(null, dataHora, 0, " ", "Agendado","",id));
+            if (flag) {
+                c.adicionaConsulta(new Consulta(null, dataHora, 0, " ", "Agendado", "", id));
                 AlertBox.display("Confirmação", "Consulta adicionada com sucesso! :)");
-            } else  AlertBox.display("Confirmação", "Consulta já marcada neste horario :(");
+            } else AlertBox.display("Confirmação", "Consulta já marcada neste horario :(");
             answer = true;
             Stage window = (Stage) addButton.getScene().getWindow();
             window.close();
+            }catch(NullPointerException k){
+                k.printStackTrace();
+                AlertBox.display("Error", "Preencha todos os campos");
+            }
         });
 
         cancelButton.setOnAction(e -> {

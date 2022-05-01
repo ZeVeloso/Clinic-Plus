@@ -104,9 +104,7 @@ public class ConsultaDetalhadaController {
     }
 
     private void textAreaDetectNewInput(TextArea textArea) {
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            changed = true;
-        });
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> changed = true);
     }
     private void datePickerDetectedNewInput(DatePicker datePicker){
         datePicker.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -116,14 +114,10 @@ public class ConsultaDetalhadaController {
         });
     }
     private void textFieldDetectNewInput(TextField textField){
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            changed=true;
-        });
+        textField.textProperty().addListener((observable, oldValue, newValue) -> changed=true);
     }
     private void labelDetectNewInput(Label label){
-        label.textProperty().addListener((observable, oldValue, newValue) -> {
-            changed=true;
-        });
+        label.textProperty().addListener((observable, oldValue, newValue) -> changed=true);
     }
 
     public void displayConsulta(Consulta c, TableView t, ObservableList data, int type){

@@ -9,86 +9,34 @@ import java.util.Arrays;
 public class MainTeste {
     public static void main(String[] args) {
         String url = "jdbc:sqlite:ClinicDB.db";
+        int i=0;
+        while(i<10000) {
+            try (
+                    Connection conn = DriverManager.getConnection(url)) {
+                if (conn != null) {
+                    DatabaseMetaData meta = conn.getMetaData();
+                    //System.out.println("The driver name is " + meta.getDriverName());
+                    //System.out.println("A new database has been created.");
+                    Statement statPragma = conn.createStatement();
+                    statPragma.executeUpdate("PRAGMA foreign_keys = ON");
 
-        try (
-                Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("The driver name is " + meta.getDriverName());
-                System.out.println("A new database has been created.");
-                Statement statPragma = conn.createStatement();
-                statPragma.executeUpdate("PRAGMA foreign_keys = ON");
-                String sql = "select * from utentes;";
-                String sql4 = "select * from consultas;";
-                String alterTable = "ALTER TABLE consultas " +
-                        "ADD COLUMN motivo TEXT(128);";
-                String alterTable1 = "ALTER TABLE consultas RENAME COLUMN Estado TO estado";
-                String sqlUtente = "CREATE TABLE IF NOT EXISTS utentes (" +
-                        "  id INTEGER PRIMARY KEY ," +
-                        "  nascimento VARCHAR(45) NOT NULL," +
-                        "  telemovel INT NOT NULL," +
-                        "  idade INT NOT NULL," +
-                        "  profissao VARCHAR(45) NULL," +
-                        "  historico_familiar TEXT(512) NULL," +
-                        "  historico_pessoal TEXT(512) NULL," +
-                        "  nome VARCHAR(64) NULL," +
-                        "  atividade_fisica VARCHAR(128) NULL)"
-                        ;
-                String sqlConsulta = "CREATE TABLE IF NOT EXISTS consultas (" +
-                        "id INTEGER PRIMARY KEY,"+
-                        "dataa DATE NOT NULL,"+
-                        "custo FLOAT NULL,"+
-                        "utente_id INT NULL,"+
-                        "FOREIGN KEY (utente_id)"+
-                        "REFERENCES utentes (id)"+
-                        "ON DELETE CASCADE "+
-                        "ON UPDATE NO ACTION);";
-                String sql3 =
-                        "INSERT OR REPLACE INTO utentes (id, nascimento, telemovel, idade, profissao, historico_familiar,historico_pessoal,nome,atividade_fisica) " +
-                                "VALUES (3, '2021-1-1',1,1,'profissao1','historico f','historico pess','nomeAlterado3','ativ fisica2')";//+
-                String sql2 = "insert into utentes (nascimento, telemovel, idade, profissao, historico_familiar,historico_pessoal,nome,atividade_fisica) " +
-                        "VALUES ('2021-1-1',1,1,'profissao1','historico f','historico pess','nome1','ativ fisica2')";
+                    String insertUtnete = "INSERT INTO consultas VALUES (null, '','', 0,'','','','','nome6','',2)";
 
-                String insertConsulta = "insert into consultas (id, dataa, custo, fk_utente_id, estado) VALUES (null, '2000-01-02',4,3, 'coco')";
-                String updateTeste = "UPDATE utentes SET nascimento='" + "ad" +"', telemovel= " + "1234" + ","+
-                        "idade=" + "12" + ", profissao = '" + "prof" + "', historico_familiar='"+"fam"+
-                        "', historico_pessoal='"+"pess" + "', nome='"+ "nomeAlteradoUpdate" + "', atividade_fisica='"+"fisica"+
-                        "' WHERE id=" + "3";
+                    Statement stat4 = conn.createStatement();
+                    Statement stat5 = conn.createStatement();
 
-                Statement stat = conn.createStatement();
-                Statement stat1 = conn.createStatement();
-                Statement stat2 = conn.createStatement();
-                Statement stat3 = conn.createStatement();
-                Statement stat4 = conn.createStatement();
-                Statement stat5 = conn.createStatement();
-                PreparedStatement pstmt = conn.prepareStatement("INSERT OR REPLACE INTO documentos (id,doc, fk_utente_id) " +
-                        "VALUES (8,?,2)");
-                byte[] f = readFile("C:\\Users\\Asus\\Desktop\\clinica.png");
-                System.out.println(Arrays.toString(f));
-                pstmt.setBytes(1, f);
-                pstmt.execute();
-                File file = new File("coco3.png");
-                FileOutputStream fos =  new FileOutputStream(file);
-                ResultSet res = stat4.executeQuery("select * from utentes");
-                ResultSet res1 = stat5.executeQuery("select * from documentos WHERE id=8");
-                Image image1 = null;
-                while (res1.next()) {
-                    InputStream input = res1.getBinaryStream("doc");
-                    byte[] buffer = new byte[1024];
-                    while (input.read(buffer) > 0) {
-                        fos.write(buffer);
-                    }
+                    //ResultSet res = stat4.executeQuery("select * from utentes");
+
+                    stat5.executeQuery(insertUtnete);
+
+
                 }
 
-
+            } catch (SQLException e) {
+                e.getMessage();
             }
-
-        } catch (SQLException | FileNotFoundException e) {
-            e.getMessage();
-        } catch (IOException e) {
-            e.printStackTrace();
+        i++;
         }
-
     }
 
     private static byte[] readFile(String file) {

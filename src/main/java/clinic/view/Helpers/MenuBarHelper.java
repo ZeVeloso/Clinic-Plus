@@ -35,6 +35,7 @@ public class MenuBarHelper {
         Menu utentesMenu = new Menu("Utentes");
         Menu clinicasMenu = new Menu("Clinicas");
         Menu consultasMenu = new Menu("Consultas");
+        Menu faturamentoMenu = new Menu("Faturamento");
         Menu helpMenu = new Menu("Ajuda");
 
         MenuItem pesqUtentes = new MenuItem("Pesquisar");
@@ -43,7 +44,16 @@ public class MenuBarHelper {
         MenuItem pesqClinicas = new MenuItem("Pesquisar");
         MenuItem pesqConsultas = new MenuItem("Pesquisar");
         MenuItem addConsultas = new MenuItem("Adicionar");
+        MenuItem faturamentoItem = new MenuItem("Faturamento");
         MenuItem ajuda = new MenuItem("Ajuda");
+
+        faturamentoItem.setOnAction(e-> {
+            try {
+                GoToHelper.goToNewStage("money.fxml",400,140);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
 
         pesqUtentes.setOnAction(e-> {
             try {
@@ -94,9 +104,10 @@ public class MenuBarHelper {
         utentesMenu.getItems().addAll(pesqUtentes, addUtentes);
         clinicasMenu.getItems().addAll(pesqClinicas, addClinica);
         consultasMenu.getItems().addAll(pesqConsultas, addConsultas);
+        faturamentoMenu.getItems().add(faturamentoItem);
         helpMenu.getItems().add(ajuda);
 
-        menuBar.getMenus().addAll(utentesMenu, clinicasMenu, consultasMenu, helpMenu);
+        menuBar.getMenus().addAll(utentesMenu, clinicasMenu, consultasMenu, faturamentoMenu, helpMenu);
 
         hBox.getChildren().addAll(logoView, menuBar);
 

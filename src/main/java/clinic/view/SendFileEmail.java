@@ -1,5 +1,7 @@
 package clinic.view;
 
+import clinic.view.Box.AlertBox;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ public class SendFileEmail {
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "25");
         prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
         final String username = "clinicaappmais@gmail.com";//
         final String password = "ClinicaPaulo";
         try{
@@ -53,8 +56,10 @@ public class SendFileEmail {
 
             Transport.send(message);
             System.out.println("Backup sent.");
+            AlertBox.display("Backup", "Backup enviado com sucesso");
         }catch (MessagingException | IOException e){
             System.out.println("Erro, provavelmente nao tens net" + e);
+            AlertBox.display("Backup", "Backup com erro, reportar o erro");
         }
     }
 }

@@ -7,7 +7,7 @@
 
 <BorderPane fx:id="borderPane" prefHeight="497.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clinic.view.ClinicasController">
    <right>
-      <VBox prefHeight="462.0" prefWidth="147.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="487.0" prefWidth="145.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="CENTER" prefHeight="15.0" prefWidth="231.0" text="Utentes">
                <VBox.margin>
@@ -125,7 +125,7 @@
       </VBox>
    </right>
    <left>
-      <TableView fx:id="tableClinica" prefHeight="462.0" prefWidth="147.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableClinica" prefHeight="487.0" prefWidth="146.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="idClinicaCol" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="nomeClinicaCol" prefWidth="75.0" text="Nome" />

@@ -1,9 +1,7 @@
 package clinic;
 
-import clinic.view.Box.AlertBox;
 import clinic.view.Box.ConfirmBox;
 import clinic.view.FirstPreloader;
-import clinic.view.SendFileEmail;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +18,6 @@ public class MainFX extends Application {
         primaryStage.setTitle("Clinic +");
         primaryStage.setOnCloseRequest(t -> {
             t.consume();
-            boolean bool = ConfirmBox.display("Backup","Deseja enviar um backup da base de dados para o email?");
-            if (bool) {
-
-                AlertBox.display("Backup", "Loading backup... Nao feches a aplicação\nFechar esta janela para continuar");
-                SendFileEmail.main();
-            }
             boolean boolLeft = ConfirmBox.display("Backup","Quer sair? Todos os dados nao guardados serão apagados");
             if (boolLeft) {
                 Platform.exit();

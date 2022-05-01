@@ -70,6 +70,14 @@
                </children>
             </VBox>
             <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <Button fx:id="backupButton" mnemonicParsing="false" onAction="#backupButtonHandler" prefHeight="26.0" prefWidth="220.0" text="Backup (Email)">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitHandler" prefHeight="25.0" prefWidth="275.0" text="Sair" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

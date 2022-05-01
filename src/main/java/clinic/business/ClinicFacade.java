@@ -5,14 +5,14 @@ import clinic.Helpers.UtenteConsultaClinica;
 import clinic.data.*;
 import javafx.scene.image.Image;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Formatter;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.zip.DataFormatException;
 
 public class ClinicFacade {
 
@@ -91,10 +91,10 @@ public class ClinicFacade {
         this.auxDAO.updateConsultaCalendario(a);
     }
     public Collection<Consulta> getConsultasUtente(int idUtente) {
-        return this.auxDAO.getConsulta(idUtente).stream().sorted(bydata).collect(Collectors.toList());
+        return this.auxDAO.getConsulta(idUtente).stream().sorted(bydata.reversed()).collect(Collectors.toList());
     }
     public Collection<Consulta> getConsultaFilter(String estado, String data, int idUtente) {
-        return auxDAO.getConsultaFilter(estado,data, idUtente).stream().sorted(bydata).collect(Collectors.toList());
+        return auxDAO.getConsultaFilter(estado,data, idUtente).stream().sorted(bydata.reversed()).collect(Collectors.toList());
     }
     public void adicionaClinica(Clinica c){
         this.clinicas.put(c.getId(),c);
@@ -149,23 +149,23 @@ public class ClinicFacade {
     }
 
     public Collection<UtenteConsultaClinica> getConsultasUC(){
-        return this.auxDAO.getConsultasUC().stream().sorted(bydata2).collect(Collectors.toList());
+        return this.auxDAO.getConsultasUC().stream().sorted(bydata2.reversed()).collect(Collectors.toList());
     }
 
     public Collection<UtenteConsultaClinica> getConsultasUCFilter(String estado, String telemovel, String nomeClinica, String nomeUtente, String data){
-        return this.auxDAO.getConsultasUCFilter(estado, telemovel, nomeClinica, nomeUtente, data).stream().sorted(bydata2).collect(Collectors.toList());
+        return this.auxDAO.getConsultasUCFilter(estado, telemovel, nomeClinica, nomeUtente, data).stream().sorted(bydata2.reversed()).collect(Collectors.toList());
     }
 
     public void removeDoc(int id){
         this.documentos.remove(id);
     }
+    public float getMoneyMes(String mes, String ano){ return this.auxDAO.getMoneyMes(mes, ano); }
+    final Comparator<Utente> byIdUtente = Comparator.comparing(Utente::getId);
+    final Comparator<UtenteConsultaClinica> byIdUtente2 = Comparator.comparing(UtenteConsultaClinica::getIdUtente);
 
-    Comparator<Utente> byIdUtente = Comparator.comparing(Utente::getId);
-    Comparator<UtenteConsultaClinica> byIdUtente2 = Comparator.comparing(UtenteConsultaClinica::getIdUtente);
+    final Comparator<Clinica> byIdClinica = Comparator.comparing(Clinica::getId);
 
-    Comparator<Clinica> byIdClinica = Comparator.comparing(Clinica::getId);
-
-    Comparator<Consulta> bydata = Comparator.comparing(o -> LocalDateTime.parse(o.getData(),DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
-    Comparator<UtenteConsultaClinica> bydata2 = Comparator.comparing(o -> LocalDateTime.parse(o.getDataConsulta(),DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+    final Comparator<Consulta> bydata = Comparator.comparing(o -> LocalDateTime.parse(o.getData(),DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+    final Comparator<UtenteConsultaClinica> bydata2 = Comparator.comparing(o -> LocalDateTime.parse(o.getDataConsulta(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 
 }

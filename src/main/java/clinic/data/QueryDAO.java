@@ -2,7 +2,6 @@ package clinic.data;
 
 import clinic.Helpers.Pair;
 import clinic.Helpers.UtenteConsultaClinica;
-import clinic.MainFX;
 import clinic.business.Clinica;
 import clinic.business.Consulta;
 import clinic.business.Documento;
@@ -56,9 +55,11 @@ public class QueryDAO implements DAO {
         return consultas.updateConsultaCalendario(c);
     }
 
-public Collection<Consulta> getConsultaFilter(String estado, String data, int idUtente) {
+    public Collection<Consulta> getConsultaFilter(String estado, String data, int idUtente) {
         return consultas.getConsultaFilter(estado,data,idUtente);
     }
+
+    public float getMoneyMes(String mes, String ano) { return consultas.getMoneyMes(mes, ano); }
 
     public Collection<UtenteConsultaClinica> getConsultasUC() {
         UtenteConsultaClinica a;
