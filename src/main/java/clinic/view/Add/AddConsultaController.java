@@ -46,10 +46,16 @@ public class AddConsultaController {
             String dataFormatada = dateHelper.formatDate(data);
             String hora = horaField.getText();
             try {
-                LocalTime.parse(hora);
+                if(hora.matches("\\d") || hora.matches("\\d\\d") || hora.matches("\\d\\d:\\d\\d") || hora.matches("\\d:\\d\\d")) {
+                    LocalTime.parse(hora);
+                } else {
+                    AlertBox.display("Erro", "Erro na data");
+                    return;
+                }
+
             } catch (DateTimeParseException | NullPointerException a) {
-                if (hora.length() == 1) hora = "0" + hora + ":00";
-                else hora = hora + ":00";
+                if (hora.length() == 1 && hora.matches("\\d*")) hora = "0" + hora + ":00";
+                else if(hora.matches("\\d*")) hora = hora + ":00";
             }
             String dataHora = dataFormatada + " " + hora;
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");

@@ -13,7 +13,7 @@ public class ConsultasDAOHelp {
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery(
-                     "SELECT SUM(custo) as custo from consultas WHERE dataa like '%-" +mes + "-"+ ano +"%'")) {
+                     "SELECT SUM(custo) as custo from consultas WHERE dataa like '%" +mes + ano +"%'")) {
             while (rs.next()) {  // A chave existe na tabela
                   res = rs.getFloat("custo");
             }

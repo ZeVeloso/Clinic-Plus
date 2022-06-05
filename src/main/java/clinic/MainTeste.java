@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class MainTeste {
     public static void main(String[] args) {
-        String url = "jdbc:sqlite:ClinicDB.db";
+        String url = "jdbc:sqlite:ClinicDB2.db";
         int i=0;
         while(i<10000) {
             try (

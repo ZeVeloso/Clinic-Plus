@@ -78,10 +78,14 @@ public class AddConsultaOutController implements Initializable {
             String dataFormatada = dateHelper.formatDate(data);
             String hora = horaField.getText();
             try {
+                if(hora.matches("\\d*:\\d")) {
+                    AlertBox.display("Erro","Erro na data");
+                    return;
+                }
                 LocalTime.parse(hora);
             } catch (DateTimeParseException | NullPointerException a) {
-                if (hora.length() == 1) hora = "0" + hora + ":00";
-                else hora = hora + ":00";
+                if (hora.length() == 1 && hora.matches("\\d*")) hora = "0" + hora + ":00";
+                else if(hora.matches("\\d*")) hora = hora + ":00";
             }
             String dataHora = dataFormatada + " " + hora;
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");

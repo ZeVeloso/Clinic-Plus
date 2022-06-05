@@ -96,6 +96,10 @@
                             <linuxConfig>
                                 <pngFile>src/main/resources/clinic/Clinic+.png</pngFile>
                             </linuxConfig>
+                            <macConfig>
+                                <icnsFile>src/main/resources/clinic/Clinic+.png</icnsFile>
+                                <volumeIcon>src/main/resources/clinic/Clinic+.png</volumeIcon>
+                            </macConfig>
                         </configuration>
                     </execution>
                 </executions>

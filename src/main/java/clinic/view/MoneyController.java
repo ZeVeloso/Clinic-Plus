@@ -43,9 +43,15 @@ public class MoneyController implements Initializable {
     @FXML
     public void pesqButtonHandler(){
         try{
-            String mes = choiceMes.getSelectionModel().getSelectedItem().split(" ")[0];
-            System.out.println(mes);
-            String ano = anoField.getText();
+            String mes = "";
+            try{
+            mes = choiceMes.getSelectionModel().getSelectedItem().split(" ")[0];
+            mes = "-" + mes + "-";
+            } catch (NullPointerException ignored){
+            }
+            //System.out.println(mes);
+            String ano="";
+            ano = anoField.getText();
             float o = this.model.getMoneyMes(mes, ano);
             labelMoney.setText(o + " €");
         } catch (NullPointerException e){
