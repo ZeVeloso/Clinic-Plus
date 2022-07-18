@@ -37,6 +37,10 @@ public class QueryDAO implements DAO {
         return utentes.getUtentesFilter(nome, telemovel, nascimento, morada, idClinica);
     }
 
+    public int getLastUtente(){
+        return utentes.getLastUtente();
+    }
+
     // CONSULTAS
 
     public Collection<Consulta> getConsulta(int id) {

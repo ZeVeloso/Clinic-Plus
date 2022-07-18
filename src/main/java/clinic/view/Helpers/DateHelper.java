@@ -38,6 +38,12 @@ public class DateHelper {
         return Period.between(birthDate, currentDate).getYears();
     }
 
+    public int MonthCalculator(String birth){
+        LocalDate birthDate = LocalDate.parse(birth, formatter);
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthDate, currentDate).getMonths();
+    }
+
     public boolean isValid(String dateStr) {
         try {
             LocalDate.parse(dateStr, formatter );

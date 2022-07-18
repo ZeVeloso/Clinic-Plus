@@ -268,9 +268,15 @@ public class ControllerUtente {
         String novaData = dateHelper.formatDateCalendar(nasc);
         Clinica clinica = (Clinica) clinicaBox.getValue();
         int years = this.dateHelper.AgeCalculator(novaData);
+        String age = String.valueOf(years);
+        if(years < 1){
+            int agei = this.dateHelper.MonthCalculator(novaData)  ;
+            age = agei + " meses";
+            //System.out.println(age);
+        }
         Utente novo = new Utente(id, novaData, telemovel, years, profissao, histFam, histPess, nome, fis, morada,clinica.getId() );
         this.model.updateUtente(novo);
-        idadeField.setText(String.valueOf(years));
+        idadeField.setText(age);
         AlertBox.display("Confirmação", "Dados alterados com sucesso! :)");
         changed=false;
     }
@@ -308,7 +314,13 @@ public class ControllerUtente {
         nomeField.setText(u.getNome());
         telField.setText(String.valueOf(u.getTelemovel()));
         profField.setText(u.getProfissao());
-        idadeField.setText(String.valueOf(u.getIdade()));
+        String age = String.valueOf(u.getIdade());
+        if(u.getIdade() < 1){
+            int agei = this.dateHelper.MonthCalculator(u.getNascimento());
+            age = agei + " meses";
+            //System.out.println(age);
+        }
+        idadeField.setText(age);
         histFamField.setText(u.getHistorico_familiar());
         histPessField.setText(u.getHistorico_pessoal());
         fisField.setText(u.getAtividade_fisica());

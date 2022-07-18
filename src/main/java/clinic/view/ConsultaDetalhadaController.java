@@ -11,7 +11,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 
 public class ConsultaDetalhadaController {
@@ -64,6 +66,17 @@ public class ConsultaDetalhadaController {
         Integer id = Integer.parseInt(idLabel.getText());
         String data = dataField.getValue().format(dateHelper.getFormatter());
         String hora = horaField.getText();
+        try{
+            if(hora.matches("\\d\\d:\\d\\d")) {
+                LocalTime.parse(hora);
+            } else {
+                AlertBox.display("Erro", "Erro na data. Ex: 09:30");
+                return;
+            }
+        } catch (DateTimeException exp) {
+            AlertBox.display("Erro", "Erro na data. Ex: 09:30");
+        }
+
         String dataHora = data + " " + hora;
         String estado = estadoLabel.getText();
         float custo = Float.parseFloat(custoField.getText());

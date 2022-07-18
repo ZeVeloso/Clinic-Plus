@@ -12,10 +12,12 @@ import javafx.stage.Stage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 
@@ -42,29 +44,42 @@ public class AddConsultaController {
 
         addButton.setOnAction(e -> {
             try{
-            String data = dataField.getValue().toString();
-            String dataFormatada = dateHelper.formatDate(data);
-            String hora = horaField.getText();
-            try {
-                if(hora.matches("\\d") || hora.matches("\\d\\d") || hora.matches("\\d\\d:\\d\\d") || hora.matches("\\d:\\d\\d")) {
-                    LocalTime.parse(hora);
-                } else {
-                    AlertBox.display("Erro", "Erro na data");
+                String data = dataField.getValue().toString();
+                String dataFormatada = dateHelper.formatDate(data);
+                String hora = horaField.getText();
+                if(Objects.equals(hora, ""))
+                    hora = "00:00";
+                try {
+                    if(hora.matches("\\d") || hora.matches("\\d\\d") || hora.matches("\\d\\d:\\d\\d")) {
+                        LocalTime.parse(hora);
+                    } else {
+                        AlertBox.display("Erro", "Erro na data. Ex: 9 | 10 | 09:30");
+                        return;
+                    }
+
+                } catch (DateTimeParseException | NullPointerException a) {
+                    if (hora.length() == 1 && hora.matches("\\d")) hora = "0" + hora + ":00";
+                    else if(hora.matches("\\d\\d")) hora = hora + ":00";
+                    else return;
+                    try {
+                        LocalTime.parse(hora);
+                    } catch (DateTimeException exp) {
+                        AlertBox.display("Erro", "Erro na data. Ex: 9 | 10 | 09:30");
+                        return;
+                    }
+                } catch (DateTimeException exp) {
+                    AlertBox.display("Erro", "Erro na data. Ex: 9 | 10 | 09:30");
                     return;
                 }
-
-            } catch (DateTimeParseException | NullPointerException a) {
-                if (hora.length() == 1 && hora.matches("\\d*")) hora = "0" + hora + ":00";
-                else if(hora.matches("\\d*")) hora = hora + ":00";
-            }
-            String dataHora = dataFormatada + " " + hora;
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-            Date d1 = null;
-            Date d2 = null;
-
+                String dataHora = dataFormatada + " " + hora;
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                Date d1 = null;
+                Date d2 = null;
+            /*
             System.out.println(dataHora + " " + id);
-            Collection<Consulta> colec = c.getConsultas();
-            boolean flag = true;
+            Collection<Consulta> colec = c.getConsultas();*/
+                boolean flag = true;
+            /*
             for (Consulta u : colec) {
                 try {
                     d1 = format.parse(dataHora);
@@ -82,15 +97,13 @@ public class AddConsultaController {
                     break;
                 }
             }
-
-            if (flag) {
+            */
                 c.adicionaConsulta(new Consulta(null, dataHora, 0, " ", "Agendado", "", id));
                 AlertBox.display("Confirmação", "Consulta adicionada com sucesso! :)");
-            } else AlertBox.display("Confirmação", "Consulta já marcada neste horario :(");
-            answer = true;
-            Stage window = (Stage) addButton.getScene().getWindow();
-            window.close();
-            }catch(NullPointerException k){
+                answer = true;
+                Stage window = (Stage) addButton.getScene().getWindow();
+                window.close();
+            } catch(NullPointerException k){
                 k.printStackTrace();
                 AlertBox.display("Error", "Preencha todos os campos");
             }

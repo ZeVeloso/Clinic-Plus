@@ -27,6 +27,25 @@ public class UtentesDAOHelp {
         return res;
     }
 
+    public int getLastUtente() {
+        int res = 0;
+        try (Connection conn = DriverManager.getConnection(DAOconfig.URL);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery(
+                     "SELECT * FROM utentes ORDER BY id DESC LIMIT 1;")) {
+            while (rs.next()) {  // A chave existe na tabela
+
+                res = rs.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            // Database error!
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return res;
+
+    }
     public Collection<Utente> getUtentesFilter(String nome, String telemovel, String nascimento, String morada, String idClinica) {
         Collection<Utente> res1 = new HashSet<>();
         try (Connection conn = DriverManager.getConnection(DAOconfig.URL);

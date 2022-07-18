@@ -22,6 +22,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -77,12 +78,16 @@ public class AddConsultaOutController implements Initializable {
             String data = dataField.getValue().toString();
             String dataFormatada = dateHelper.formatDate(data);
             String hora = horaField.getText();
+            if(Objects.equals(hora, ""))
+                hora = "00:00";
             try {
-                if(hora.matches("\\d*:\\d")) {
-                    AlertBox.display("Erro","Erro na data");
+                if(hora.matches("\\d") || hora.matches("\\d\\d") || hora.matches("\\d\\d:\\d\\d")) {
+                    LocalTime.parse(hora);
+                } else {
+                    AlertBox.display("Erro", "Erro na data");
                     return;
                 }
-                LocalTime.parse(hora);
+
             } catch (DateTimeParseException | NullPointerException a) {
                 if (hora.length() == 1 && hora.matches("\\d*")) hora = "0" + hora + ":00";
                 else if(hora.matches("\\d*")) hora = hora + ":00";
@@ -93,8 +98,9 @@ public class AddConsultaOutController implements Initializable {
             Date d2 = null;
 
             //System.out.println(dataHora + " " + id);
-            Collection<Consulta> colec = this.model.getConsultas();
+            //Collection<Consulta> colec = this.model.getConsultas();
             boolean flag = true;
+            /*
             for (Consulta u : colec) {
                 try {
                     d1 = format.parse(dataHora);
@@ -110,7 +116,7 @@ public class AddConsultaOutController implements Initializable {
                     break;
                 }
             }
-
+            */
             if (flag) {
                 Utente utente;
                 utente = choiceBox.getSelectionModel().getSelectedItem();

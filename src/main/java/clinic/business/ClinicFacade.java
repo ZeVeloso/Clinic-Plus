@@ -64,6 +64,8 @@ public class ClinicFacade {
         this.auxDAO.updateUtente(u.getId(),u);
     }
 
+    public int getLastUtente(){ return this.auxDAO.getLastUtente(); }
+
     public Collection<Consulta> getConsultas() {
         return this.consultas.values().stream().sorted(bydata).collect(Collectors.toList());
     }

@@ -2,8 +2,10 @@ package clinic.view.Add;
 
 import clinic.business.ClinicFacade;
 import clinic.business.Clinica;
+import clinic.business.Consulta;
 import clinic.business.Utente;
 import clinic.view.Box.AlertBox;
+import clinic.view.Box.ConfirmBox;
 import clinic.view.Helpers.DateHelper;
 import clinic.view.calendar.FXCalendar;
 import javafx.fxml.FXML;
@@ -20,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -59,45 +62,56 @@ public class AddUtenteController implements Initializable {
     public void adicionarHandler() throws ParseException {
 
         try {
-        String name = nomeField.getText();
-        String tel = telField.getText();
+
+            String name = nomeField.getText();
+            String tel = telField.getText();
 
 
-        String nasc = calendar.getValue().toString();
-        String novaData = dateHelper.formatDateCalendar(nasc);
+            String nasc = calendar.getValue().toString();
+            String novaData = dateHelper.formatDateCalendar(nasc);
 
-        String morada = moradaField.getText();
-        //String novaData = dateHelper.formatDateCalendar(nasc);
-        Clinica clinica;
-        if(!clinicaChooser.getItems().isEmpty())
-            clinica = clinicaChooser.getSelectionModel().getSelectedItem();
-        else clinica = new Clinica(null, "Temporario");
-        int years=this.dateHelper.AgeCalculator(novaData);
-        int telInt=0;
-        if(tel.equals("")){
-            tel="0";
-        }
+            String morada = moradaField.getText();
+            //String novaData = dateHelper.formatDateCalendar(nasc);
+            Clinica clinica;
+            if(!clinicaChooser.getItems().isEmpty())
+                clinica = clinicaChooser.getSelectionModel().getSelectedItem();
+            else clinica = new Clinica(null, "Temporario");
+            int years=this.dateHelper.AgeCalculator(novaData);
+            int telInt=0;
+            if(tel.equals("")){
+                tel="0";
+            }
 
-        try {
-            telInt = Integer.parseInt(tel);
-            this.model.adicionaUtente(new Utente(null, name, years, telInt, morada, novaData, clinica.getId()));
-            nomeField.clear();
-            telField.clear();
-            calendar.clear();
-            moradaField.clear();
+            try {
+                telInt = Integer.parseInt(tel);
+                this.model.adicionaUtente(new Utente(null, name, years, telInt, morada, novaData, clinica.getId()));
+                nomeField.clear();
+                telField.clear();
+                calendar.clear();
+                moradaField.clear();
+
+            } catch (NullPointerException e) {
+                AlertBox.display("Erro", "Preencher todos os campos com *");
+                telField.clear();
+            } catch (NumberFormatException e){
+                AlertBox.display("Erro", "Telemovel nao é um numero EX:961231231");
+                telField.clear();
+            }
+            boolean answer = ConfirmBox.display("Consulta", "Adicionar consulta para hoje?");
+            if(answer){
+                LocalDate currentDate = LocalDate.now();
+                String dataFormatada = dateHelper.formatDate(currentDate.toString());
+                String hora = "00:00";
+                String dataHora = dataFormatada + " " + hora;
+                int id = this.model.getLastUtente();
+                model.adicionaConsulta(new Consulta(null, dataHora, 0, " ", "Agendado", "", id));
+            }
             Stage window = (Stage) adicionarButton.getScene().getWindow();
             window.close();
-        }catch (NullPointerException e) {
-            AlertBox.display("Erro", "Preencher todos os campos com *");
-            telField.clear();
-        } catch (NumberFormatException e){
-            AlertBox.display("Erro", "Telemovel nao é um numero EX:961231231");
-            telField.clear();
-        }
 
-    } catch (NullPointerException e){
-        AlertBox.display("Erro", "Preencher todos os campos com *1");
-    }
+        } catch (NullPointerException e){
+            AlertBox.display("Erro", "Preencher todos os campos com *1");
+        }
 
     }
 
