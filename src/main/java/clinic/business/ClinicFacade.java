@@ -163,7 +163,8 @@ public class ClinicFacade {
     }
     public float getMoneyMes(String mes, String ano){ return this.auxDAO.getMoneyMes(mes, ano); }
     final Comparator<Utente> byIdUtente = Comparator.comparing(Utente::getId);
-    final Comparator<UtenteConsultaClinica> byIdUtente2 = Comparator.comparing(UtenteConsultaClinica::getIdUtente);
+    final Comparator<UtenteConsultaClinica> byIdUtente2 = Comparator.comparing(UtenteConsultaClinica::getIdUtente).reversed();
+
 
     final Comparator<Clinica> byIdClinica = Comparator.comparing(Clinica::getId);
 
