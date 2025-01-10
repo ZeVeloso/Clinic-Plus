@@ -1,3 +1,4 @@
+Currently being used by health professionals.
 
 ![alt text](https://github.com/ZeVeloso/Clinic-Plus/blob/main/Images/main.png)
 
